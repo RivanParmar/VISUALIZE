@@ -2,24 +2,46 @@
 First of all, thanks for any contributions that you make to this project and they are really appreciated! Below given are the requirements and setup instructions to help you get started for contributing.
 
 # Requirements
-- Android Studio Bumblebee Patch 1 (or newer)
-- Intellij IDEA CE 2021.3.2 (or newer)
+- Android Studio Bumblebee Patch 1 (or newer) (Android Studio is required only for testing purposes and isn't mandatory as most of the work is to be done in Intellij IDEA only)
+- Intellij IDEA 2021.3.2 (or newer) (CE or Ultimate)
 
 # Setup
 - First, fork this repository to your account.
 - Clone the forked repository to your machine.
-- Open the cloned project in Intellij IDEA CE and let it import all the items (this may take some time).
-- Sign in to your GitHub account in Intellij IDEA CE if not already done.
-- Next, click on Git from the Toolbar and click on **New Branch**.
-- Add a name for your branch in the next dialog.
+- Open the cloned project in Intellij IDEA.
+- Match the `intellij.version` in **build.gradle** file with the Android Studio's platform version installed on your machine. For more information, please visit [Android Studio Plugin Development](https://plugins.jetbrains.com/docs/intellij/android-studio.html).
+- If you have Android Studio installed in some other directory than given in `runIde.ideDir`, change the variable's value accordingly.
+- Next, sign in to your GitHub account in Intellij IDEA (if not already done). [^1]
+- Next, click on Git from the Toolbar and click on **New Branch**. [^1]
+- Add a name for your branch in the next dialog. [^1]
 - After the branch has been created, you're ready to start contributing!
 
+# Contributing
+Want to contribute to the project but don't know where to start? Checkout the [Issues](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/issues) page to see currently open issues which you can try to solve. Done contributing to the project? [Make a pull request](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/edit/master/CONTRIBUTING.md#making-a-pull-request) by following the steps given below!
+
+# Making a Pull Request
+- Please make sure to read the [notes](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/edit/master/CONTRIBUTING.md#notes) before making a pull request.
+- After making necessary changes to the project, first of all, click on **Update Project** from Git from the Toolbar in Intellij IDEA to update the project if any changes have been made to it later.
+- Next, clcik on **Push** from Git from the Toolbar. [^1]
+- A dialog will be shown, in which you will be able to see the changes that you have made to the project.
+- Deselect the **.gradle** (not the **gradle**) folder and the **build** folder, if they are selected.
+- Then click on **Push** and add a commit message. [^1]
+- Next, open GitHub and go to the forked repository.
+- You will see an option saying **Compare & Pull Request** at the top of your project.
+- Click on it and the pull request will be made.
+- Congratulations! You have made your first pull request to the project!
+
 # Notes
-- Please do not change `intellij.version` while contributing, until a major stable version of Android Studio is released.
+- Please do not change `intellij.version` while making a pull request, until a major stable version of Android Studio is released.
 - You need to assign `intellij.version` according to your Android Studio version as shown in [Android Studio Plugin Development](https://plugins.jetbrains.com/docs/intellij/android-studio.html).
-- Alternately, instead of `version` you can set `localPath` to the installation directory of Android Studio which would be same as `runIde.ideDir`.
+- Alternately, instead of `version` you can set `localPath` to the installation directory of Android Studio which would be same as `runIde.ideDir`. (But you must remove it before making a pull request)
 - The `runIde.ideDir` is the Android Studio installation directory.
 
-# More Resources
+# Resources
+- For getting started with Intellij IDEA or Android Studio plugins, checkout [Plugin Development Quick Start Guide](https://plugins.jetbrains.com/docs/intellij/basics.html).
+- For Android Studio specific plugin development setup, see [Android Studio Plugin Development](https://plugins.jetbrains.com/docs/intellij/android-studio.html).
+### Sample Resources
 - [Gradle-Intellij-Plugin](https://github.com/JetBrains/gradle-intellij-plugin)
 - [Android Plugin for Intellij IDEA](https://github.com/JetBrains/android)
+
+[^1]: These steps are optional as you can do them your own way as well.
