@@ -12,7 +12,7 @@ One of the main reasons to add Visual Scripting is obviously because Android Stu
 - Creating issues and feature-requests is also a great way of contributing!
 
 # Issues and Feature-requests
-Two templates - **Bug report** and **Feature request** are provided under the issues tab for creating new issues and feature-requests respectively.
+Two templates - **Bug report** and **Feature request** are provided under the issues tab for creating new issues and feature-requests respectively. You can also use the **No Template** to report an issue by writing everything on your own.
 
 # Resources
 - For getting started with Intellij IDEA or Android Studio plugins, checkout [Plugin Development Quick Start Guide](https://plugins.jetbrains.com/docs/intellij/basics.html).
