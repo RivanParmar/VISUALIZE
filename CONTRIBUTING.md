@@ -17,7 +17,7 @@ First of all, thanks for any contributions that you make to this project and the
 - After the branch has been created, you're ready to start contributing!
 
 # Running and Debugging
-- First of all, set the `runIde.ideDir` to your own Android Studio installation path or leave it as it is if it's installed in the same directory as given.
+- First of all, set the `runIde.ideDir` to your own Android Studio installation path or leave it as it is if it's installed in the same directory as given. Or if you haven't installed Android Studio, comment out those lines including `runIde`.
 - Minimum Android Studio version **4.0** is required for the plugin to work.
 - Click on Run (or Debug if you're debugging) from the Toolbar.
 - An Android Studio instance will open up and ask to install Android Studio.
