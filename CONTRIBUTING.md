@@ -16,13 +16,23 @@ First of all, thanks for any contributions that you make to this project and the
 - Add a name for your branch in the next dialog. [^1]
 - After the branch has been created, you're ready to start contributing!
 
+# Running and Debugging
+- First of all, set the `runIde.ideDir` to your own Android Studio installation path or leave it as it is if it's installed in the same directory as given.
+- Minimum Android Studio version **4.0** is required for the plugin to work.
+- Click on Run (or Debug if you're debugging) from the Toolbar.
+- An Android Studio instance will open up and ask to install Android Studio.
+- Click on **Cancel** and in the next dialog, select **Don't show again**.
+- Presently, Android Studio project selection screen will open.
+- Go to the Plugins tab and you would see this plugin as the first item in the list as installed.
+- Congratulations! You have successfully run the Plugin in Android Studio.
+
 # Contributing
-Want to contribute to the project but don't know where to start? Checkout the [Issues](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/issues) page to see currently open issues which you can try to solve. Done contributing to the project? [Make a pull request](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/edit/master/CONTRIBUTING.md#making-a-pull-request) by following the steps given below!
+Want to contribute to the project but don't know where to start? Checkout the [Issues](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/issues) page to see currently open issues which you can try to solve. Or found an issue in the project? Then create a new issue after checking if it's already not submitted. Done contributing to the project? [Make a pull request](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/edit/master/CONTRIBUTING.md#making-a-pull-request) by following the steps given below!
 
 # Making a Pull Request
 - Please make sure to read the [notes](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/edit/master/CONTRIBUTING.md#notes) before making a pull request.
 - After making necessary changes to the project, first of all, click on **Update Project** from Git from the Toolbar in Intellij IDEA to update the project if any changes have been made to it later.
-- Next, clcik on **Push** from Git from the Toolbar. [^1]
+- Next, click on **Push** from Git from the Toolbar. [^1]
 - A dialog will be shown, in which you will be able to see the changes that you have made to the project.
 - Deselect the **.gradle** (not the **gradle**) folder and the **build** folder, if they are selected.
 - Then click on **Push** and add a commit message. [^1]
@@ -33,7 +43,6 @@ Want to contribute to the project but don't know where to start? Checkout the [I
 
 # Notes
 - Please do not change `intellij.version` while making a pull request, until a major stable version of Android Studio is released.
-- You need to assign `intellij.version` according to your Android Studio version as shown in [Android Studio Plugin Development](https://plugins.jetbrains.com/docs/intellij/android-studio.html).
 - Alternately, instead of `version` you can set `localPath` to the installation directory of Android Studio which would be same as `runIde.ideDir`. (But you must remove it before making a pull request)
 - The `runIde.ideDir` is the Android Studio installation directory.
 
