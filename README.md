@@ -2,7 +2,7 @@
 Plugin for adding Visual Scripting to Android Studio for Java and Kotlin.
 
 # Work-In-Progress
-Currently, the project has just been started and nothing much has been done and so the plugin is not yet ready for use. Again, this project is highly experimental and it may take much to reach a stable state. Your contributions can make a lot of difference!
+Currently, the project has just been started and nothing much has been done and so the plugin is not yet ready for use. Again, this project is highly experimental and it may take much time to reach a stable state. Your contributions can make a lot of difference!
 
 # Why add Visual Scripting to Android Studio?
 One of the main reasons to add Visual Scripting is obviously because Android Studio does not have it. Visual Scripting helps new developers starting with programming to easily write long codes with visual help. Unity and Unreal Engine and many others have already got Visual Scripting implemented so that freshers starting to learn coding in them can easily write codes visually which is easier than normal code writing.
@@ -16,4 +16,4 @@ One of the main reasons to add Visual Scripting is obviously because Android Stu
 - Creating issues and feature-requests is also a great way of contributing!
 
 # Issues and Feature-requests
-Two templates - **Bug report** and **Feature request** are provided under the issues tab for creating new issues and feature-requests respectively. You can also use the **No Template** to report an issue by writing everything on your own.
+Two templates - **Bug report** and **Feature request** are provided under the issues tab for creating new issues and feature-requests respectively. You can also use the **No Template** or the **Blank Template** to report an issue if the templates don't meet your requirements or the issue isn't related to the templates.
