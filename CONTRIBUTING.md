@@ -30,6 +30,7 @@ First of all, thanks for any contributions that you make to this project and the
 Want to contribute to the project but don't know where to start? Checkout the [Issues](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/issues) page to see currently open issues which you can try to solve. Or found an issue in the project? Then create a new issue after checking if it's already not submitted. Done contributing to the project? [Make a pull request](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/edit/master/CONTRIBUTING.md#making-a-pull-request) by following the steps given below!
 
 # Making a Pull Request
+**Note**: Please check the **Issues** tab to see whether the issue you are trying to solve has been reported or not. If it isn't reported, then first please create a new issue and discuss what you are trying to do and then create a pull request.
 - Please make sure to read the [notes](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/edit/master/CONTRIBUTING.md#notes) before making a pull request.
 - After making necessary changes to the project, first of all, click on **Update Project** from Git from the Toolbar in Intellij IDEA to update the project if any changes have been made to it later.
 - Next, click on **Push** from Git from the Toolbar. [^1]
