@@ -9,8 +9,6 @@
 https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white)-->
 </p>
 
-![Typing SVG](https://readme-typing-svg.herokuapp.com/?duration=6000&color=298EBB&size=30&center=true&vCenter=true&width=760&height=120&multiline=true&lines=Why+write+a+single+line+of+code?;Use+Android+Studio+Visual+Scripting+Plugin)
-
 #  Android Studio Visual Scripting Plugin
 [![GitHub stars](https://img.shields.io/github/stars/RivanParmar/Android-Studio-Visual-Scripting-Plugin?style=for-the-badge)](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/stargazers) [![GitHub forks](https://img.shields.io/github/forks/RivanParmar/Android-Studio-Visual-Scripting-Plugin?style=for-the-badge)](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/network)
 
