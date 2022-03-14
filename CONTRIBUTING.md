@@ -1,7 +1,7 @@
 # Contributing to the Plugin
 First of all, thanks for any contributions that you make to this project and they are really appreciated! Below given are the requirements and setup instructions to help you get started for contributing.
 
-# Requirements
+# Prerequisites
 - Android Studio Bumblebee Patch 1 (or newer) (Android Studio is required only for testing purposes and isn't mandatory as most of the work is to be done in Intellij IDEA only)
 - Intellij IDEA 2021.3.2 (or newer) (CE or Ultimate)
 
