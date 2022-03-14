@@ -1,7 +1,22 @@
-![Android Studio](https://img.shields.io/badge/Android_Studio-3DDC84?style=for-the-badge&logo=android-studio&logoColor=white) ![Intellij IDEA](https://img.shields.io/badge/IntelliJ_IDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white) ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white) ![Kotlin](https://img.shields.io/badge/Kotlin-0095D5?&style=for-the-badge&logo=kotlin&logoColor=white) ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white) ![Gradle](
-https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white)
+<p align="center">
+  <img src="https://img.shields.io/badge/Android_Studio-3DDC84?style=for-the-badge&logo=android-studio&logoColor=white"/>
+  <img src="https://img.shields.io/badge/IntelliJ_IDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Kotlin-0095D5?&style=for-the-badge&logo=kotlin&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white"/>
+  <img src="https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white"/>
+<!--![Android Studio](https://img.shields.io/badge/Android_Studio-3DDC84?style=for-the-badge&logo=android-studio&logoColor=white) ![Intellij IDEA](https://img.shields.io/badge/IntelliJ_IDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white) ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white) ![Kotlin](https://img.shields.io/badge/Kotlin-0095D5?&style=for-the-badge&logo=kotlin&logoColor=white) ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white) ![Gradle](
+https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white)-->
+</p>
+
+![Typing SVG](https://readme-typing-svg.herokuapp.com/?duration=6000&color=298EBB&size=30&center=true&vCenter=true&width=760&height=120&multiline=true&lines=Why+write+a+single+line+of+code?;Use+Android+Studio+Visual+Scripting+Plugin)
+
 #  Android Studio Visual Scripting Plugin
-Plugin for adding Visual Scripting to Android Studio for Java and Kotlin.
+[![GitHub stars](https://img.shields.io/github/stars/RivanParmar/Android-Studio-Visual-Scripting-Plugin?style=for-the-badge)](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/stargazers) [![GitHub forks](https://img.shields.io/github/forks/RivanParmar/Android-Studio-Visual-Scripting-Plugin?style=for-the-badge)](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/network)
+
+Plugin for adding Visual Scripting to Android Studio for Java and Kotlin. The plugin for Android Studio that will help you make your best app in Android Studio **without writing any Java or Kotlin code**!
+
+I am looking forward to more views and stars for this project which will motivate me to finish it as fast as possible.
 
 # Work-In-Progress
 Currently, the project has just been started and nothing much has been done and so the plugin is not yet ready for use. Again, this project is highly experimental and it may take much time to reach a stable state. Your contributions can make a lot of difference!
@@ -23,4 +38,9 @@ Currently, no specific designs have been made on how the Visual Editor and it's 
 - Creating issues and feature-requests is also a great way of contributing!
 
 # Issues and Feature-requests
+[![GitHub issues](https://img.shields.io/github/issues/RivanParmar/Android-Studio-Visual-Scripting-Plugin?style=for-the-badge)](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/issues) [![GitHub issues by-label](https://img.shields.io/github/issues/RivanParmar/Android-Studio-Visual-Scripting-Plugin/good%20first%20issue?color=blueviolet&label=good%20first%20issues&style=for-the-badge)](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/labels/good%20first%20issue)
+
 Two templates - **Bug report** and **Feature request** are provided under the issues tab for creating new issues and feature-requests respectively. You can also use the **No Template** or the **Blank Template** to report an issue if the templates don't meet your requirements or the issue isn't related to the templates.
+
+# License
+[![GitHub license](https://img.shields.io/github/license/RivanParmar/Android-Studio-Visual-Scripting-Plugin?style=for-the-badge)](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin)
