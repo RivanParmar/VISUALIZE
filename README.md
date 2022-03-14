@@ -1,3 +1,5 @@
+![Android Studio](https://img.shields.io/badge/Android_Studio-3DDC84?style=for-the-badge&logo=android-studio&logoColor=white) ![Intellij IDEA](https://img.shields.io/badge/IntelliJ_IDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white) ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white) ![Kotlin](https://img.shields.io/badge/Kotlin-0095D5?&style=for-the-badge&logo=kotlin&logoColor=white) ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white) ![Gradle](
+https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white)
 #  Android Studio Visual Scripting Plugin
 Plugin for adding Visual Scripting to Android Studio for Java and Kotlin.
 
@@ -10,6 +12,11 @@ One of the main reasons to add Visual Scripting is obviously because Android Stu
 # Visual Scripting
 - Don't know what Visual Scripting (or Visual Programming) is? Check out the wiki [here](https://en.wikipedia.org/wiki/Visual_programming_language).
 - Want to see how Visual Scripting works? Check out [Unity Visual Scripting](https://unity.com/products/unity-visual-scripting) or check out Google's own [Blockly](https://developers.google.com/blockly).
+
+# Editor Design
+![Figma](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)
+
+Currently, no specific designs have been made on how the Visual Editor and it's components will look. But designs will be created in Figma using the [Intellij UI Kit](https://jetbrains.design/intellij/resources/UI_kit/). So if you're interested in designing the Visual Editor and it's components, do so in Figma and share it here in the **Issues** tab with the **Feature-request** template.
 
 # Contributing
 - If you would like to get involved and want to contribute, see [CONTRIBUTING.md](CONTRIBUTING.md) for requirements, setup and to get started and help you with creating your first pull request for the project.
