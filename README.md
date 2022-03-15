@@ -41,4 +41,6 @@ Currently, no specific designs have been made on how the Visual Editor and it's 
 Two templates - **Bug report** and **Feature request** are provided under the issues tab for creating new issues and feature-requests respectively. You can also use the **No Template** or the **Blank Template** to report an issue if the templates don't meet your requirements or the issue isn't related to the templates.
 
 # Licence
-[![GitHub](https://img.shields.io/badge/license-apache%2D-2.0-green.svg?style=for-the-badge)](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/blob/master/LICENSE)
+[![GitHub license](https://img.shields.io/github/license/RivanParmar/Android-Studio-Visual-Scripting-Plugin?style=for-the-badge)](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/blob/master/LICENSE)
+
+This project is available to all under the [Apache-2.0](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/blob/master/LICENSE) license.
