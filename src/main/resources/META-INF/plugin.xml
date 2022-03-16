@@ -1,7 +1,21 @@
+<!-- Copyright 2022 Rivan Parmar
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License. -->
+
 <idea-plugin>
     <id>com.rivan.android.studio.visual.scripting</id>
     <name>Android Studio Visual Scripting</name>
-    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+    <vendor email="support@yourcompany.com" url="https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin">YourCompany</vendor>
 
     <description><![CDATA[
     Enter short description for your plugin here.<br>
@@ -11,9 +25,12 @@
     <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
          on how to target different products -->
     <depends>com.intellij.modules.platform</depends>
+    <depends>org.jetbrains.android</depends>
+    <depends>com.intellij.modules.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
+        <fileEditorProvider implementation="SplitEditorProvider" />
     </extensions>
 
     <actions>

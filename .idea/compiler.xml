@@ -3,4 +3,9 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="11" />
   </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Android_Studio_Visual_Scripting_Plugin.main" options="--add-modules java.base,java.desktop" />
+    </option>
+  </component>
 </project>
