@@ -1,5 +1,5 @@
 # Contributing to the Plugin
-First of all, thanks for any contributions that you make to this project and they are really appreciated! Below given are the requirements and setup instructions to help you get started for contributing.
+First of all, thanks for any contributions that you make to this project and they are really appreciated! Below given are the prerequisites and setup instructions to help you get started for contributing.
 
 # Prerequisites
 ![Android Studio](https://img.shields.io/badge/Android_Studio-Bumblebee%20Patch%201-3DDC84?style=for-the-badge&logo=android-studio&logoColor=white)
