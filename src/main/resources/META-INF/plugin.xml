@@ -30,7 +30,6 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
-        <fileEditorProvider implementation="SplitEditorProvider" />
     </extensions>
 
     <actions>
