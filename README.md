@@ -17,7 +17,7 @@ Plugin for adding Visual Scripting to Android Studio for Java and Kotlin. The pl
 I am looking forward to more views and stars for this project which will motivate me to finish it as fast as possible.
 
 # Work-In-Progress
-Currently, the project has just been started and nothing much has been done and so the plugin is not yet ready for use. Again, this project is highly experimental and it may take much time to reach a stable state. Your contributions can make a lot of difference!
+Currently, the project has just been started and simply creates a split editor which works only with Java files and so the plugin is not yet ready for use. Again, this project is highly experimental and it may take much time to reach a stable state. Your contributions can make a lot of difference!
 
 # Why add Visual Scripting to Android Studio?
 One of the main reasons to add Visual Scripting is obviously because Android Studio does not have it. Visual Scripting helps new developers starting with programming to easily write long codes with visual help. Unity and Unreal Engine and many others have already got Visual Scripting implemented so that freshers starting to learn coding in them can easily write codes visually which is easier than normal code writing.
