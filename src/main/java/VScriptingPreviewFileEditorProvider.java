@@ -12,6 +12,7 @@
    See the License for the specific language governing permissions and
    limitations under the License. */
 
+import com.intellij.facet.ProjectFacetManager;
 import com.intellij.lang.java.JavaLanguage;
 import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.fileEditor.FileEditorPolicy;
@@ -20,14 +21,16 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
+import org.jetbrains.android.facet.AndroidFacet;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.kotlin.idea.KotlinLanguage;
 
 public class VScriptingPreviewFileEditorProvider extends WeighedFileEditorProvider {
 
     @Override
     public boolean accept(@NotNull Project project, @NotNull VirtualFile file) {
         PsiFile checkedFile = PsiManager.getInstance(project).findFile(file);
-        return checkedFile.getLanguage() == JavaLanguage.INSTANCE;
+        return checkedFile.getLanguage() == JavaLanguage.INSTANCE && ProjectFacetManager.getInstance(project).hasFacets(AndroidFacet.ID);
     }
 
     @NotNull
@@ -45,6 +48,6 @@ public class VScriptingPreviewFileEditorProvider extends WeighedFileEditorProvid
     @NotNull
     @Override
     public FileEditorPolicy getPolicy() {
-        return FileEditorPolicy.HIDE_DEFAULT_EDITOR;
+        return FileEditorPolicy.PLACE_AFTER_DEFAULT_EDITOR;
     }
 }

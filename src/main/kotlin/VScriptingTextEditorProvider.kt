@@ -37,7 +37,7 @@ class VScriptingTextEditorProvider : PsiAwareTextEditorProvider() {
     override fun createEditor(project: Project, file: VirtualFile): FileEditor {
         val actualEditor = super.createEditor(project, file)
         if (actualEditor is TextEditor) {
-            val toolbar = FloatingActionsToolbar(actualEditor.editor, "Visual.Toolbar")
+            val toolbar = FloatingActionsToolbar(actualEditor.editor, "Visual.Scripting.Toolbar.Actions")
             Disposer.register(actualEditor, toolbar)
         }
         return actualEditor

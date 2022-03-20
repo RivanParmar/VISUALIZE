@@ -18,6 +18,6 @@ class FloatingActionsToolbarCustomizableGroupProvider: CustomizableActionGroupPr
 
     override fun registerGroups(registrar: CustomizableActionGroupRegistrar?) {
         registrar?.addCustomizableActionGroup(
-            "Visual.Toolbar", "Visual.Scripting")
+            "Visual.Scripting.Toolbar.Actions", "Visual.Scripting.Toolbar")
     }
 }

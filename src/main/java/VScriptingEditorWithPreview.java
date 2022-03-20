@@ -19,6 +19,6 @@ import org.jetbrains.annotations.NotNull;
 public class VScriptingEditorWithPreview extends TextEditorWithPreview {
 
     public VScriptingEditorWithPreview(@NotNull TextEditor editor, @NotNull VScriptingPreviewFileEditor preview) {
-        super(editor, preview, "custom-editor", Layout.SHOW_EDITOR_AND_PREVIEW);
+        super(editor, preview, "Visual Scripting Editor", Layout.SHOW_EDITOR_AND_PREVIEW);
     }
 }
