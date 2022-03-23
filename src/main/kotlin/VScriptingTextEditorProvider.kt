@@ -23,6 +23,7 @@ import com.intellij.openapi.util.Disposer
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiManager
 import org.jetbrains.android.facet.AndroidFacet
+import org.jetbrains.kotlin.idea.KotlinLanguage
 
 class VScriptingTextEditorProvider : PsiAwareTextEditorProvider() {
 
@@ -31,7 +32,7 @@ class VScriptingTextEditorProvider : PsiAwareTextEditorProvider() {
             return false
         }
         val checkedFile = PsiManager.getInstance(project).findFile(file)
-        return ProjectFacetManager.getInstance(project).hasFacets(AndroidFacet.ID) && checkedFile!!.language === JavaLanguage.INSTANCE
+        return ProjectFacetManager.getInstance(project).hasFacets(AndroidFacet.ID) && (checkedFile!!.language === JavaLanguage.INSTANCE || checkedFile!!.language == KotlinLanguage.INSTANCE)
     }
 
     override fun createEditor(project: Project, file: VirtualFile): FileEditor {

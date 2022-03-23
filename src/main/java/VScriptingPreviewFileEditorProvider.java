@@ -30,7 +30,7 @@ public class VScriptingPreviewFileEditorProvider extends WeighedFileEditorProvid
     @Override
     public boolean accept(@NotNull Project project, @NotNull VirtualFile file) {
         PsiFile checkedFile = PsiManager.getInstance(project).findFile(file);
-        return checkedFile.getLanguage() == JavaLanguage.INSTANCE && ProjectFacetManager.getInstance(project).hasFacets(AndroidFacet.ID);
+        return (checkedFile.getLanguage() == JavaLanguage.INSTANCE || checkedFile.getLanguage() == KotlinLanguage.INSTANCE) && ProjectFacetManager.getInstance(project).hasFacets(AndroidFacet.ID);
     }
 
     @NotNull

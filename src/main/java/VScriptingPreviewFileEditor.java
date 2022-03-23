@@ -74,7 +74,7 @@ public class VScriptingPreviewFileEditor extends UserDataHolderBase implements F
 
     @Override
     public @NotNull String getName() {
-        return "preview-editor";
+        return "vscripting-preview-file-editor";
     }
 
     @Override

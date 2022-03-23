@@ -36,7 +36,7 @@ public abstract class VScriptingSplitTextEditorProvider implements AsyncFileEdit
         myFirstProvider = firstProvider;
         mySecondProvider = secondProvider;
 
-        myEditorTypeId = "vscript-split-provider[" + myFirstProvider.getEditorTypeId() + ";" + mySecondProvider.getEditorTypeId() + "]";
+        myEditorTypeId = "vscripting-split-provider[" + myFirstProvider.getEditorTypeId() + ";" + mySecondProvider.getEditorTypeId() + "]";
     }
 
     @Override
