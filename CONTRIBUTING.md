@@ -12,10 +12,10 @@ First of all, thanks for any contributions that you make to this project and the
 - First, fork this repository to your account.
 - Clone the forked repository to your machine.
 - Open the cloned project in Intellij IDEA.
-- Match the `intellij.version` in **build.gradle** file with the Android Studio's platform version installed on your machine. For more information, please visit [Android Studio Plugin Development](https://plugins.jetbrains.com/docs/intellij/android-studio.html).
+- Match the `intellij.version` in **build.gradle** file with the Android Studio's platform version installed on your machine. For more information, please visit [Android Studio Plugin Development](https://plugins.jetbrains.com/docs/intellij/android-studio.html). For a list of all Android Studio releases along with the platform Intellij IDEA version, go [here](https://plugins.jetbrains.com/docs/intellij/android-studio-releases-list.html).
 - If you have Android Studio installed in some other directory than given in `runIde.ideDir`, change the variable's value accordingly.
 - Next, sign in to your GitHub account in Intellij IDEA (if not already done). [^1]
-- Next, click on Git from the Toolbar and click on **New Branch**. [^1]
+- Next, from the Toolbar, click on Git -> **New Branch**. [^1]
 - Add a name for your branch in the next dialog. [^1]
 - After the branch has been created, you're ready to start contributing!
 
@@ -36,8 +36,8 @@ Or interested in designing how the plugin and it's components will look? Check [
 # Making a Pull Request
 **Note**: Please check the **Issues** tab to see whether the issue you are trying to solve has been reported or not. If it isn't reported, then first please create a new issue and discuss what you are trying to do and then create a pull request.
 - Please make sure to read the [notes](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/edit/master/CONTRIBUTING.md#notes) before making a pull request.
-- After making necessary changes to the project, first of all, click on **Update Project** from Git from the Toolbar in Intellij IDEA to update the project if any changes have been made to it later.
-- Next, click on **Push** from Git from the Toolbar. [^1]
+- After making necessary changes to the project, from the Toolbar, click on Git -> **Update Project** in Intellij IDEA to update the project to the latest changes.
+- Next, click on Git -> **Push** from the Toolbar. [^1]
 - A dialog will be shown, in which you will be able to see the changes that you have made to the project.
 - Deselect the **.gradle** (not the **gradle**) folder and the **build** folder, if they are selected.
 - Then click on **Push** and add a commit message. [^1]
@@ -48,7 +48,7 @@ Or interested in designing how the plugin and it's components will look? Check [
 
 # Notes
 - Please do not change `intellij.version` while making a pull request, until a major stable version of Android Studio is released.
-- Alternately, instead of `version` you can set `localPath` to the installation directory of Android Studio which would be same as `runIde.ideDir`. (But you must remove it before making a pull request)
+- Instead of `version` you can also set `localPath` to the installation directory of Android Studio which would be same as `runIde.ideDir`. (But you must remove it before making a pull request)
 - The `runIde.ideDir` is the Android Studio installation directory.
 
 # Resources
@@ -56,6 +56,7 @@ Or interested in designing how the plugin and it's components will look? Check [
 - For Android Studio specific plugin development setup, see [Android Studio Plugin Development](https://plugins.jetbrains.com/docs/intellij/android-studio.html).
 ### Sample Resources
 - [Gradle-Intellij-Plugin](https://github.com/JetBrains/gradle-intellij-plugin)
+- [Intellij IDEA plugins](https://github.com/JetBrains/intellij-community/tree/master/plugins)
 - [Android Plugin for Intellij IDEA](https://github.com/JetBrains/android)
 
 [^1]: These steps are optional as you can do them your own way as well.

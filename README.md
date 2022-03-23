@@ -31,7 +31,7 @@ One of the main reasons to add Visual Scripting is obviously because Android Stu
 # Editor Design
 ![Figma](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)
 
-Currently, no specific designs have been made on how the Visual Editor and it's components will look. But designs will be created in Figma using the [Intellij UI Kit](https://jetbrains.design/intellij/resources/UI_kit/). So if you're interested in designing the Visual Editor and it's components, do so in Figma and share it here in the **Issues** tab with the **Feature-request** template.
+Currently, no specific designs have been made on how the Visual Editor and it's components will look. But designs will be created in Figma using the [Intellij UI Kit](https://jetbrains.design/intellij/resources/UI_kit/). So if you're interested in designing the Visual Editor and it's components, do so in Figma and share it's photo here in the [**Discussions tab**](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/discussions/8).
 
 # Contributing
 - If you would like to get involved and want to contribute, see [CONTRIBUTING.md](CONTRIBUTING.md) for requirements, setup and to get started and help you with creating your first pull request for the project.
