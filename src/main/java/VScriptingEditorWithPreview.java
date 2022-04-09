@@ -20,11 +20,17 @@ import org.jetbrains.annotations.NotNull;
 
 public class VScriptingEditorWithPreview extends TextEditorWithPreview {
 
-    private EditorToolbarActions textViewAction = new EditorToolbarActions("Code", AllIcons.General.LayoutEditorOnly, super.getShowEditorAction());
+    private EditorToolbarActions textViewAction = new EditorToolbarActions("Code",
+            AllIcons.General.LayoutEditorOnly,
+            super.getShowEditorAction());
 
-    private EditorToolbarActions splitViewAction = new EditorToolbarActions("Split", AllIcons.General.LayoutEditorPreview, super.getShowEditorAndPreviewAction());
+    private EditorToolbarActions splitViewAction = new EditorToolbarActions("Split",
+            AllIcons.General.LayoutEditorPreview,
+            super.getShowEditorAndPreviewAction());
 
-    private EditorToolbarActions visualViewAction = new EditorToolbarActions("Visual Code", AllIcons.General.LayoutPreviewOnly, super.getShowPreviewAction());
+    private EditorToolbarActions visualViewAction = new EditorToolbarActions("Visual Code",
+            AllIcons.General.LayoutPreviewOnly,
+            super.getShowPreviewAction());
 
     public VScriptingEditorWithPreview(@NotNull TextEditor editor, @NotNull VScriptingPreviewFileEditor preview) {
         super(editor, preview, "Visual Scripting Editor", Layout.SHOW_EDITOR_AND_PREVIEW);
