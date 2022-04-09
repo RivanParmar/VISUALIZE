@@ -15,7 +15,6 @@
 import com.intellij.facet.ProjectFacetManager
 import com.intellij.lang.java.JavaLanguage
 import com.intellij.openapi.fileEditor.FileEditor
-import com.intellij.openapi.fileEditor.FileEditorPolicy
 import com.intellij.openapi.fileEditor.TextEditor
 import com.intellij.openapi.fileEditor.impl.text.PsiAwareTextEditorProvider
 import com.intellij.openapi.project.Project
@@ -32,7 +31,8 @@ class VScriptingTextEditorProvider : PsiAwareTextEditorProvider() {
             return false
         }
         val checkedFile = PsiManager.getInstance(project).findFile(file)
-        return ProjectFacetManager.getInstance(project).hasFacets(AndroidFacet.ID) && (checkedFile!!.language === JavaLanguage.INSTANCE || checkedFile!!.language == KotlinLanguage.INSTANCE)
+        return ProjectFacetManager.getInstance(project)
+            .hasFacets(AndroidFacet.ID) && (checkedFile!!.language === JavaLanguage.INSTANCE || checkedFile!!.language == KotlinLanguage.INSTANCE)
     }
 
     override fun createEditor(project: Project, file: VirtualFile): FileEditor {
@@ -42,9 +42,5 @@ class VScriptingTextEditorProvider : PsiAwareTextEditorProvider() {
             Disposer.register(actualEditor, toolbar)
         }
         return actualEditor
-    }
-
-    override fun getPolicy(): FileEditorPolicy {
-        return FileEditorPolicy.HIDE_DEFAULT_EDITOR
     }
 }
