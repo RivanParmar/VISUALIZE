@@ -14,11 +14,8 @@
 
 import com.intellij.facet.ProjectFacetManager
 import com.intellij.lang.java.JavaLanguage
-import com.intellij.openapi.fileEditor.FileEditor
-import com.intellij.openapi.fileEditor.TextEditor
 import com.intellij.openapi.fileEditor.impl.text.PsiAwareTextEditorProvider
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.util.Disposer
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiManager
 import org.jetbrains.android.facet.AndroidFacet
@@ -33,14 +30,5 @@ class VScriptingTextEditorProvider : PsiAwareTextEditorProvider() {
         val checkedFile = PsiManager.getInstance(project).findFile(file)
         return ProjectFacetManager.getInstance(project)
             .hasFacets(AndroidFacet.ID) && (checkedFile!!.language === JavaLanguage.INSTANCE || checkedFile!!.language == KotlinLanguage.INSTANCE)
-    }
-
-    override fun createEditor(project: Project, file: VirtualFile): FileEditor {
-        val actualEditor = super.createEditor(project, file)
-        if (actualEditor is TextEditor) {
-            val toolbar = FloatingActionsToolbar(actualEditor.editor, "Visual.Scripting.Toolbar.Actions")
-            Disposer.register(actualEditor, toolbar)
-        }
-        return actualEditor
     }
 }
