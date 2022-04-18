@@ -59,7 +59,7 @@ public class VScriptingPreviewFileEditor extends UserDataHolderBase implements F
             }, this);
         }
 
-        myPanelWrapper = new JPanel(new BorderLayout());
+        myPanelWrapper = new JPanel();
     }
 
     @Override
