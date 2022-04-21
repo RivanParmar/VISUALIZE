@@ -21,6 +21,10 @@ import com.intellij.psi.PsiManager
 import org.jetbrains.android.facet.AndroidFacet
 import org.jetbrains.kotlin.idea.KotlinLanguage
 
+/**
+ * A PsiAwareTextEditor to be shown along with the preview editor.
+ */
+
 class VScriptingTextEditorProvider : PsiAwareTextEditorProvider() {
 
     override fun accept(project: Project, file: VirtualFile): Boolean {

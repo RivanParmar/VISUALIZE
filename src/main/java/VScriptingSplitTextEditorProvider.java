@@ -22,6 +22,10 @@ import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ *  Abstract class to implement a Split Text Editor.
+ */
+
 public abstract class VScriptingSplitTextEditorProvider implements AsyncFileEditorProvider, DumbAware {
 
     @NotNull

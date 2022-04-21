@@ -16,6 +16,12 @@ import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.fileEditor.TextEditor;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ *  The main class extending {@link VScriptingSplitTextEditorProvider} and creating an editor with {@link VScriptingTextEditorProvider}
+ *  and {@link VScriptingPreviewFileEditorProvider}.
+ *  This class has to be registered in the plugin.xml file as a "fileEditorProvider".
+ */
+
 public class VScriptingSplitEditorProvider extends VScriptingSplitTextEditorProvider{
 
     public VScriptingSplitEditorProvider() {

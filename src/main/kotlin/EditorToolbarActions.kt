@@ -17,6 +17,10 @@ import com.intellij.openapi.actionSystem.ToggleAction
 import com.intellij.openapi.project.DumbAware
 import javax.swing.Icon
 
+/**
+ * Class for implementing custom buttons with an icon and text to be shown in the SplitEditorToolbar.
+ */
+
 open class EditorToolbarActions internal constructor(val name: String,
                                                      val icon: Icon,
                                                      val delegate: ToggleAction): ToggleAction(name, name, icon), DumbAware {

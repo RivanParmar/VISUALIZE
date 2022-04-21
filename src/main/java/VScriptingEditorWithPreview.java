@@ -18,6 +18,10 @@ import com.intellij.openapi.fileEditor.TextEditor;
 import com.intellij.openapi.fileEditor.TextEditorWithPreview;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ *  Class extending TextEditorWithPreview that is returned as the main editor by {@link VScriptingSplitEditorProvider}.
+ */
+
 public class VScriptingEditorWithPreview extends TextEditorWithPreview {
 
     private final EditorToolbarActions textViewAction = new EditorToolbarActions("Code",

@@ -27,8 +27,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
-import java.awt.*;
 import java.beans.PropertyChangeListener;
+
+/**
+ *  File Editor for the Visual Editor (or the Preview Editor).
+ */
 
 public class VScriptingPreviewFileEditor extends UserDataHolderBase implements FileEditor {
 

@@ -14,10 +14,7 @@ First of all, thanks for any contributions that you make to this project and the
 - Open the cloned project in Intellij IDEA.
 - Match the `intellij.version` in **build.gradle** file with the Android Studio's platform version installed on your machine. For more information, please visit [Android Studio Plugin Development](https://plugins.jetbrains.com/docs/intellij/android-studio.html). For a list of all Android Studio releases along with the platform Intellij IDEA version, go [here](https://plugins.jetbrains.com/docs/intellij/android-studio-releases-list.html).
 - If you have Android Studio installed in some other directory than given in `runIde.ideDir`, change the variable's value accordingly.
-- Next, sign in to your GitHub account in Intellij IDEA (if not already done). [^1]
-- Next, from the Toolbar, click on Git -> **New Branch**. [^1]
-- Add a name for your branch in the next dialog. [^1]
-- After the branch has been created, you're ready to start contributing!
+- Congratulations, you are now ready to start contributing!
 
 # Running and Debugging
 - First of all, set the `runIde.ideDir` to your own Android Studio installation path or leave it as it is if it's installed in the same directory as given. Or if you haven't installed Android Studio, comment out those lines including `runIde`.
@@ -37,10 +34,11 @@ Or interested in designing how the plugin and it's components will look? Check [
 **Note**: Please check the **Issues** tab to see whether the issue you are trying to solve has been reported or not. If it isn't reported, then first please create a new issue and discuss what you are trying to do and then create a pull request.
 - Please make sure to read the [notes](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/edit/master/CONTRIBUTING.md#notes) before making a pull request.
 - After making necessary changes to the project, from the Toolbar, click on Git -> **Update Project** in Intellij IDEA to update the project to the latest changes.
-- Next, click on Git -> **Push** from the Toolbar. [^1]
-- A dialog will be shown, in which you will be able to see the changes that you have made to the project.
+- Next, click on Git -> **Commit** from the Toolbar. [^1]
+- A tool window will be shown, in which you will be able to see the changes that you have made to the project.
 - Deselect the **.gradle** (not the **gradle**) folder and the **build** folder, if they are selected.
-- Then click on **Push** and add a commit message. [^1]
+- Then add a commit message and click on **Commit and Push**. [^1]
+- Push the changes in the next dialog.
 - Next, open GitHub and go to the forked repository.
 - You will see an option saying **Compare & Pull Request** at the top of your project.
 - Click on it and the pull request will be made.

@@ -25,6 +25,10 @@ import org.jetbrains.android.facet.AndroidFacet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.kotlin.idea.KotlinLanguage;
 
+/**
+ *  File Editor Provider for the Visual Editor (or the Preview Editor).
+ */
+
 public class VScriptingPreviewFileEditorProvider extends WeighedFileEditorProvider {
 
     @Override
