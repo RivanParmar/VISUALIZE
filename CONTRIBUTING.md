@@ -33,15 +33,7 @@ Or interested in designing how the plugin and it's components will look? Check [
 # Making a Pull Request
 **Note**: Please check the **Issues** tab to see whether the issue you are trying to solve has been reported or not. If it isn't reported, then first please create a new issue and discuss what you are trying to do and then create a pull request.
 - Please make sure to read the [notes](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/edit/master/CONTRIBUTING.md#notes) before making a pull request.
-- After making necessary changes to the project, from the Toolbar, click on Git -> **Update Project** in Intellij IDEA to update the project to the latest changes.
-- Next, click on Git -> **Commit** from the Toolbar. [^1]
-- A tool window will be shown, in which you will be able to see the changes that you have made to the project.
-- Deselect the **.gradle** (not the **gradle**) folder and the **build** folder, if they are selected.
-- Then add a commit message and click on **Commit and Push**. [^1]
-- Push the changes in the next dialog.
-- Next, open GitHub and go to the forked repository.
-- You will see an option saying **Compare & Pull Request** at the top of your project.
-- Click on it and the pull request will be made.
+- After making necessary changes to the project, create a pull request just as you would normally do.
 - Congratulations! You have made your first pull request to the project!
 
 # Notes
@@ -56,5 +48,3 @@ Or interested in designing how the plugin and it's components will look? Check [
 - [Gradle-Intellij-Plugin](https://github.com/JetBrains/gradle-intellij-plugin)
 - [Intellij IDEA plugins](https://github.com/JetBrains/intellij-community/tree/master/plugins)
 - [Android Plugin for Intellij IDEA](https://github.com/JetBrains/android)
-
-[^1]: These steps are optional as you can do them your own way as well.
