@@ -12,6 +12,8 @@
    See the License for the specific language governing permissions and
    limitations under the License. */
 
+package com.rivan.android.studio.visual.scripting;
+
 import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.fileEditor.TextEditor;
 import org.jetbrains.annotations.NotNull;
@@ -24,10 +26,15 @@ import org.jetbrains.annotations.NotNull;
 
 public class VScriptingSplitEditorProvider extends VScriptingSplitTextEditorProvider{
 
+    /**
+     * Create the {@link VScriptingSplitEditorProvider} with {@link VScriptingTextEditorProvider} as the TextEditor and
+     * {@link VScriptingPreviewFileEditorProvider} as the preview editor.
+     */
     public VScriptingSplitEditorProvider() {
         super(new VScriptingTextEditorProvider(), new VScriptingPreviewFileEditorProvider());
     }
 
+    // Create the split editor and return a new VScriptingEditorWithPreview
     @Override
     protected FileEditor createSplitEditor(@NotNull FileEditor firstEditor, @NotNull FileEditor secondEditor) {
         if (!(firstEditor instanceof TextEditor) || !(secondEditor instanceof VScriptingPreviewFileEditor)) {

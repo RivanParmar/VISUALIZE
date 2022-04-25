@@ -12,6 +12,8 @@
    See the License for the specific language governing permissions and
    limitations under the License. */
 
+package com.rivan.android.studio.visual.scripting;
+
 import com.intellij.openapi.fileEditor.AsyncFileEditorProvider;
 import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.fileEditor.FileEditorPolicy;
@@ -23,7 +25,7 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
 /**
- *  Abstract class to implement a Split Text Editor.
+ *  Abstract class to create a Split Text Editor.
  */
 
 public abstract class VScriptingSplitTextEditorProvider implements AsyncFileEditorProvider, DumbAware {
@@ -36,6 +38,9 @@ public abstract class VScriptingSplitTextEditorProvider implements AsyncFileEdit
     @NotNull
     private final String myEditorTypeId;
 
+    /**
+     * Constructor that takes two {@link FileEditorProvider}s.
+     */
     public VScriptingSplitTextEditorProvider(@NotNull FileEditorProvider firstProvider, @NotNull FileEditorProvider secondProvider) {
         myFirstProvider = firstProvider;
         mySecondProvider = secondProvider;
@@ -43,6 +48,7 @@ public abstract class VScriptingSplitTextEditorProvider implements AsyncFileEdit
         myEditorTypeId = "vscripting-split-provider[" + myFirstProvider.getEditorTypeId() + ";" + mySecondProvider.getEditorTypeId() + "]";
     }
 
+    // Call both the provider's accept functions
     @Override
     public boolean accept(@NotNull Project project, @NotNull VirtualFile file) {
         return myFirstProvider.accept(project, file) && mySecondProvider.accept(project, file);
@@ -74,7 +80,7 @@ public abstract class VScriptingSplitTextEditorProvider implements AsyncFileEdit
 
     protected abstract FileEditor createSplitEditor(@NotNull FileEditor firstEditor, @NotNull FileEditor secondEditor);
 
-
+    // Hide the default editor
     @Override
     public @NotNull FileEditorPolicy getPolicy() {
         return FileEditorPolicy.HIDE_DEFAULT_EDITOR;

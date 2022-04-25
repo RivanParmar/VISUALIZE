@@ -12,6 +12,8 @@
    See the License for the specific language governing permissions and
    limitations under the License. */
 
+package com.rivan.android.studio.visual.scripting;
+
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.ToggleAction;
 import com.intellij.openapi.fileEditor.TextEditor;
@@ -24,23 +26,34 @@ import org.jetbrains.annotations.NotNull;
 
 public class VScriptingEditorWithPreview extends TextEditorWithPreview {
 
+    // The "Code" Action along with its icon
     private final EditorToolbarActions textViewAction = new EditorToolbarActions("Code",
             AllIcons.General.LayoutEditorOnly,
             super.getShowEditorAction());
 
+    // The "Split" Action along with its icon
     private final EditorToolbarActions splitViewAction = new EditorToolbarActions("Split",
             AllIcons.General.LayoutEditorPreview,
             super.getShowEditorAndPreviewAction());
 
+    // The "Visual Editor" action along with its icon
     private final EditorToolbarActions visualViewAction = new EditorToolbarActions("Visual Editor",
             AllIcons.General.LayoutPreviewOnly,
             super.getShowPreviewAction());
 
+    /**
+     * Constructor for creating a {@link TextEditorWithPreview}.
+     *
+     * @param editor The TextEditor to be shown along with a preview editor.
+     * @param preview A preview editor to be shown along with the TextEditor. In this case the preview editor
+     *                is {@link VScriptingPreviewFileEditor}
+     */
     public VScriptingEditorWithPreview(@NotNull TextEditor editor, @NotNull VScriptingPreviewFileEditor preview) {
         super(editor, preview, "Visual Scripting Editor", Layout.SHOW_EDITOR_AND_PREVIEW);
     }
 
 
+    // Show all the above defined Actions in the SplitEditorToolbar
     @Override
     protected @NotNull ToggleAction getShowEditorAction() {
         return textViewAction;
