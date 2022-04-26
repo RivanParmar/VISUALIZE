@@ -18,7 +18,7 @@ Plugin for adding Visual Scripting to Android Studio for Java and Kotlin. The pl
 
 If you like the project please consider giving it a **star**. I am looking forward to more views and stars for this project which will motivate me to finish it as soon as possible.
 
-# Work-In-Progress
+# ⚠️ Work-In-Progress
 ![Android Studio](https://user-images.githubusercontent.com/77159650/165101089-9df4809f-66a0-45b2-934b-0ed00f39577a.png)
 Currently, the project simply creates a split editor which works with Java and Kotlin files and looks as in the above screenshot and so the plugin is not yet ready for use. The "Visual Scripting Editor" is our editor. The default Android Studio editor cannot be hidden, so the other button will remain as it is. Again, this project is highly experimental and it may take much time to reach a stable state. Your contributions can make a lot of difference!
 
