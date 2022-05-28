@@ -21,9 +21,10 @@ dependencies {
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
     // Targeting Intellij IDEA version of Android Studio Chipmunk
-    version = '2021.2.4'
+    //version = '2021.2.4'
     type = 'IC'
-    plugins = ['android', 'com.intellij.java']
+    plugins = ['android', 'com.intellij.java', 'design-tools']
+    localPath = 'C:\\Program Files\\Android\\Android Studio'
 }
 
 runIde {
