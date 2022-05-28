@@ -2,10 +2,10 @@
 First of all, thanks for any contributions that you make to this project and they are really appreciated! Below given are the prerequisites and setup instructions to help you get started for contributing.
 
 # Prerequisites
-![Android Studio](https://img.shields.io/badge/Android_Studio-Bumblebee%20Patch%201-3DDC84?style=for-the-badge&logo=android-studio&logoColor=white)
+![Android Studio](https://img.shields.io/badge/Android_Studio-Chipmunk-3DDC84?style=for-the-badge&logo=android-studio&logoColor=white)
 ![Intellij IDEA](https://img.shields.io/badge/IntelliJ_IDEA-v2021.3.2-orange.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
 
-- Android Studio Bumblebee Patch 1 (or newer) (Android Studio is required only for testing purposes and isn't mandatory as most of the work is to be done in Intellij IDEA only)
+- Android Studio Chipmunk (or newer) (Android Studio is required only for testing purposes and isn't mandatory as most of the work is to be done in Intellij IDEA only)
 - Intellij IDEA 2021.3.2 (or newer) (CE or Ultimate)
 
 # Setup
@@ -18,7 +18,7 @@ First of all, thanks for any contributions that you make to this project and the
 
 # Running and Debugging
 - First of all, set the `runIde.ideDir` to your own Android Studio installation path or leave it as it is if it's installed in the same directory as given. Or if you haven't installed Android Studio, comment out those lines including `runIde`.
-- Minimum Android Studio version **4.0** is required for the plugin to work.
+- Minimum Android Studio Arctic Fox Canary 1 is required for the plugin to work.
 - Click on Run (or Debug if you're debugging) from the Toolbar.
 - An Android Studio instance will open up and ask to install Android Studio.
 - Click on **Cancel** and in the next dialog, select **Don't show again**.
