@@ -5,12 +5,16 @@
   <img src="https://img.shields.io/badge/Kotlin-0095D5?&style=for-the-badge&logo=kotlin&logoColor=white"/>
   <img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white"/>
   <img src="https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white"/>
+<!--![Android Studio](https://img.shields.io/badge/Android_Studio-3DDC84?style=for-the-badge&logo=android-studio&logoColor=white) ![Intellij IDEA](https://img.shields.io/badge/IntelliJ_IDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white) ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white) ![Kotlin](https://img.shields.io/badge/Kotlin-0095D5?&style=for-the-badge&logo=kotlin&logoColor=white) ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white) ![Gradle](
+https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white)-->
 </p>
 
 #  Android Studio Visual Scripting Plugin
 [![GitHub stars](https://img.shields.io/github/stars/RivanParmar/Android-Studio-Visual-Scripting-Plugin?style=for-the-badge)](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/stargazers) [![GitHub forks](https://img.shields.io/github/forks/RivanParmar/Android-Studio-Visual-Scripting-Plugin?style=for-the-badge)](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/network)
 
 Plugin for adding Visual Scripting to Android Studio for Java and Kotlin. The plugin for Android Studio that will help you make your best app in Android Studio **without writing any Java or Kotlin code**! 
+
+(**Note: This plugin will also work with Intellij IDEA when creating an Android app in it as Android Studio is built on top of Intellij IDEA.**)
 
 If you like the project please consider giving it a **star**. I am looking forward to more views and stars for this project which will motivate me to finish it as soon as possible.
 
