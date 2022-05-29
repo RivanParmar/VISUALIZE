@@ -5,7 +5,7 @@ First of all, thanks for any contributions that you make to this project and the
 ![Android Studio](https://img.shields.io/badge/Android_Studio-Chipmunk-3DDC84?style=for-the-badge&logo=android-studio&logoColor=white)
 ![Intellij IDEA](https://img.shields.io/badge/IntelliJ_IDEA-v2021.3.2-orange.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
 
-- Android Studio Chipmunk (or newer) (Android Studio is required only for testing purposes and isn't mandatory as most of the work is to be done in Intellij IDEA only)
+- Android Studio Chipmunk (or newer)
 - Intellij IDEA 2021.3.2 (or newer) (CE or Ultimate)
 
 # Setup
