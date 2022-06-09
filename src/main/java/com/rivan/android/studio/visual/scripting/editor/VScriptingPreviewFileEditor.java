@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.rivan.android.studio.visual.scripting;
+package com.rivan.android.studio.visual.scripting.editor;
 
 import com.intellij.ide.structureView.StructureViewBuilder;
 import com.intellij.openapi.fileEditor.FileEditor;

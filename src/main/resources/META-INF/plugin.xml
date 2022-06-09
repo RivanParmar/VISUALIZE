@@ -33,7 +33,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
         <!-- Order the editor as the first one if default editor cannot be hidden -->
-        <fileEditorProvider implementation="com.rivan.android.studio.visual.scripting.VScriptingSplitEditorProvider"
+        <fileEditorProvider implementation="com.rivan.android.studio.visual.scripting.editor.VScriptingSplitEditorProvider"
                             order="first"/>
     </extensions>
 

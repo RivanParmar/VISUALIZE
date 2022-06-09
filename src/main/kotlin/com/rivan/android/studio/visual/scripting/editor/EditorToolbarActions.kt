@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.rivan.android.studio.visual.scripting
+package com.rivan.android.studio.visual.scripting.editor
 
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.ToggleAction
