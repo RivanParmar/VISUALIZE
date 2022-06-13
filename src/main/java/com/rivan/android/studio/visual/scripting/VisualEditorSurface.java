@@ -1,9 +1,33 @@
 package com.rivan.android.studio.visual.scripting;
 
+/*
+ * Copyright 2022 Rivan Parmar
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
+import com.android.annotations.concurrency.GuardedBy;
+import com.android.annotations.concurrency.UiThread;
 import com.android.tools.adtui.Pannable;
 import com.android.tools.adtui.Zoomable;
+import com.android.tools.adtui.common.SwingCoordinate;
+import com.android.tools.editor.PanZoomListener;
+import com.android.tools.idea.common.surface.MouseClickDisplayPanel;
+import com.android.tools.idea.common.surface.SurfaceScale;
 import com.android.tools.idea.common.surface.SurfaceScreenScalingFactor;
+import com.android.tools.idea.common.surface.layout.MatchParentLayoutManager;
 import com.android.tools.idea.ui.designer.EditorDesignSurface;
+import com.google.common.collect.ImmutableList;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.actionSystem.DataProvider;
 import com.intellij.openapi.project.Project;
@@ -11,24 +35,145 @@ import com.intellij.openapi.util.Disposer;
 import com.intellij.ui.JBColor;
 import com.intellij.ui.components.ZoomableViewport;
 import com.intellij.util.ui.AsyncProcessIcon;
+import com.intellij.util.ui.JBUI;
+import com.intellij.util.ui.UIUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
+import java.util.ArrayList;
 
 public abstract class VisualEditorSurface<T extends SceneManager> extends EditorDesignSurface implements Disposable,
         DataProvider, Zoomable, Pannable, ZoomableViewport {
 
+    /**
+     * Determines the visibility of the zoom controls in this surface.
+     */
+    public enum ZoomControlsPolicy {
+        /** The zoom controls will always be visible. */
+        VISIBLE,
+        /** The zoom controls will never be visible. */
+        HIDDEN,
+        /** The zoom controls will only be visible when the mouse is over the surface. */
+        AUTO_HIDE
+    }
+
+    private static final Integer LAYER_PROGRESS = JLayeredPane.POPUP_LAYER + 10;
+    private static final Integer LAYER_MOUSE_CLICK = LAYER_PROGRESS + 10;
+
     private final Project project;
 
-    public VisualEditorSurface(@NotNull Project project, @NotNull Disposable parentDisposable) {
+    @NotNull private final JLayeredPane layeredPane;
+    @NotNull private final MouseClickDisplayPanel mouseClickDisplayPanel;
+
+    private final Object listenersLock = new Object();
+
+    @GuardedBy("listenersLock")
+    @NotNull private ArrayList<PanZoomListener> zoomListeners = new ArrayList<>();
+
+    /**
+     * {@link JScrollPane} contained in this surface when zooming is enabled.
+     */
+    @Nullable
+    private final JScrollPane scrollPane;
+
+    /**
+     * See {@link ZoomControlsPolicy}.
+     */
+    @NotNull
+    private final ZoomControlsPolicy zoomControlsPolicy;
+
+    @NotNull
+    private final AWTEventListener onHoverListener;
+
+    public VisualEditorSurface(@NotNull Project project, @NotNull Disposable parentDisposable,
+                               @NotNull ZoomControlsPolicy zoomControlsPolicy) {
+        this(project, parentDisposable, zoomControlsPolicy, Double.MAX_VALUE);
+    }
+
+    public VisualEditorSurface(@NotNull Project project, @NotNull Disposable parentDisposable,
+                               @NotNull ZoomControlsPolicy zoomControlsPolicy,
+                               double maxFitIntoZoomLevel) {
         super(new BorderLayout());
 
         Disposer.register(parentDisposable, this);
         this.project = project;
+        this.zoomControlsPolicy = zoomControlsPolicy;
+
+        boolean hasZoomControls = this.zoomControlsPolicy != ZoomControlsPolicy.HIDDEN;
 
         setOpaque(true);
         setFocusable(false);
+
+        progressPanel = new MyProgressPanel();
+        progressPanel.setName("Visual Editor Progress Panel");
+
+        if (hasZoomControls) {
+            scrollPane = VisualEditorSurfaceScrollPane.createDefaultScrollPane(this, getBackground(), this::notifyPanningChanged);
+        } else {
+            scrollPane = null;
+        }
+
+        mouseClickDisplayPanel = new MouseClickDisplayPanel(this);
+
+        layeredPane = new JLayeredPane();
+        layeredPane.setFocusable(true);
+        if (scrollPane != null) {
+            layeredPane.setLayout(new MatchParentLayoutManager());
+            layeredPane.add(scrollPane, JLayeredPane.POPUP_LAYER);
+        } else {
+            layeredPane.setLayout(new OverlayLayout(layeredPane));
+        }
+        layeredPane.add(progressPanel, LAYER_PROGRESS);
+        layeredPane.add(mouseClickDisplayPanel, LAYER_MOUSE_CLICK);
+
+        add(layeredPane);
+
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                if (e.getID() == ComponentEvent.COMPONENT_RESIZED) {
+
+                    repaint();
+                }
+            }
+        });
+
+        if (hasZoomControls) {
+            JPanel zoomControlsLayerPane = new JPanel();
+            zoomControlsLayerPane.setBorder(JBUI.Borders.empty(UIUtil.getScrollBarWidth()));
+            zoomControlsLayerPane.setOpaque(false);
+            zoomControlsLayerPane.setLayout(new BorderLayout());
+            zoomControlsLayerPane.setFocusable(false);
+
+            onHoverListener = event -> {
+                if (event.getID() == MouseEvent.MOUSE_ENTERED || event.getID() == MouseEvent.MOUSE_EXITED) {
+                    zoomControlsLayerPane.setVisible(
+                            SwingUtilities.isDescendingFrom(((MouseEvent)event).getComponent(), VisualEditorSurface.this)
+                    );
+                }
+            };
+
+            layeredPane.add(zoomControlsLayerPane, JLayeredPane.DRAG_LAYER);
+
+            if (this.zoomControlsPolicy == ZoomControlsPolicy.AUTO_HIDE) {
+                zoomControlsLayerPane.setVisible(false);
+                Toolkit.getDefaultToolkit().addAWTEventListener(onHoverListener, AWTEvent.MOUSE_EVENT_MASK);
+            }
+        } else {
+            onHoverListener = event -> {};
+        }
+    }
+
+    /**
+     * When true, the surface will autoscroll when the mouse gets near the edges. See {@link JScrollPane#setAutoscrolls(boolean)}
+     */
+    protected void setSurfaceAutoScrolls(boolean enabled) {
+        if (scrollPane != null) {
+            scrollPane.setAutoscrolls(enabled);
+        }
     }
 
     @SurfaceScreenScalingFactor
@@ -49,6 +194,42 @@ public abstract class VisualEditorSurface<T extends SceneManager> extends Editor
         return project;
     }
 
+    /**
+     * Gets a copy of {@code zoomListeners} under a lock. Use this method instead of accessing the listeners directly.
+     */
+    @NotNull
+    private ImmutableList<PanZoomListener> getZoomListeners() {
+        synchronized (listenersLock) {
+            return ImmutableList.copyOf(zoomListeners);
+        }
+    }
+
+    @Override
+    public void dispose() {
+        synchronized (listenersLock) {
+            zoomListeners.clear();
+        }
+
+        Toolkit.getDefaultToolkit().removeAWTEventListener(onHoverListener);
+    }
+
+    @UiThread
+    public void validateScrollArea() {
+
+    }
+
+    @UiThread
+    public void revalidateScrollArea() {
+
+    }
+
+    @SwingCoordinate
+    protected abstract Dimension getDefaultOffset();
+
+    @SwingCoordinate
+    @NotNull
+    protected abstract Dimension getPreferredContentSize(int availableWidth, int availableHeight);
+
     @Override
     public boolean isPannable() {
         return true;
@@ -56,6 +237,64 @@ public abstract class VisualEditorSurface<T extends SceneManager> extends Editor
 
     @Override
     public abstract boolean canZoomToFit();
+
+    @Override
+    public boolean canZoomToActual() {
+        return false;
+    }
+
+    /**
+     * The minimum scale we'll allow.
+     */
+    @SurfaceScale
+    protected double getMinScale() {
+        return 0;
+    }
+
+    /**
+     * The maximum scale we'll allow.
+     */
+    @SurfaceScale
+    protected double getMaxScale() {
+        return 1;
+    }
+
+    private void notifyPanningChanged(AdjustmentEvent adjustmentEvent) {
+        for (PanZoomListener myZoomListener : getZoomListeners()) {
+            myZoomListener.panningChanged(adjustmentEvent);
+        }
+    }
+
+    @NotNull
+    public JComponent getLayeredPane() {
+        return layeredPane;
+    }
+
+    @SuppressWarnings("FieldAccessedSynchronizedAndUnsynchronized")
+    private final MyProgressPanel progressPanel;
+
+    public void addPanZoomListener(@NotNull PanZoomListener listener) {
+        synchronized (listenersLock) {
+            zoomListeners.remove(listener);
+            zoomListeners.add(listener);
+        }
+    }
+
+    public void removePanZoomListener(@NotNull PanZoomListener listener) {
+        synchronized (listenersLock) {
+            zoomListeners.remove(listener);
+        }
+    }
+
+    public void activate() {
+        if (Disposer.isDisposed(this)) {
+            return;
+        }
+    }
+
+    public void deactivate() {
+
+    }
 
     protected boolean useSmallProgressIcon() {
         return true;
@@ -80,7 +319,7 @@ public abstract class VisualEditorSurface<T extends SceneManager> extends Editor
         }
 
         /**
-         * The "small" icon mode isn't just for the icon size; it's for the layout position too; see {@link #doLayout}
+         * The "small" icon mode isn't just for the icon size; it's for the layout position too; see {@link #doLayout()}
          */
         private void setSmallIcon(boolean small) {
             if (small != this.small) {
