@@ -22,6 +22,10 @@ import com.android.tools.adtui.Pannable;
 import com.android.tools.adtui.Zoomable;
 import com.android.tools.adtui.common.SwingCoordinate;
 import com.android.tools.editor.PanZoomListener;
+import com.android.tools.idea.common.model.DefaultSelectionModel;
+import com.android.tools.idea.common.model.ItemTransferable;
+import com.android.tools.idea.common.model.SecondarySelectionModel;
+import com.android.tools.idea.common.model.SelectionModel;
 import com.android.tools.idea.common.surface.MouseClickDisplayPanel;
 import com.android.tools.idea.common.surface.SurfaceScale;
 import com.android.tools.idea.common.surface.SurfaceScreenScalingFactor;
@@ -44,6 +48,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.function.Function;
 
 public abstract class VisualEditorSurface<T extends SceneManager> extends EditorDesignSurface implements Disposable,
         DataProvider, Zoomable, Pannable, ZoomableViewport {
@@ -73,11 +78,16 @@ public abstract class VisualEditorSurface<T extends SceneManager> extends Editor
     @GuardedBy("listenersLock")
     @NotNull private ArrayList<PanZoomListener> zoomListeners = new ArrayList<>();
 
+    private final SelectionModel selectionModel;
+
     /**
      * {@link JScrollPane} contained in this surface when zooming is enabled.
      */
     @Nullable
     private final JScrollPane scrollPane;
+
+    @NotNull
+    private final Function<VisualEditorSurface<T>, SurfaceActionHandler> actionHandlerProvider;
 
     /**
      * See {@link ZoomControlsPolicy}.
@@ -89,23 +99,29 @@ public abstract class VisualEditorSurface<T extends SceneManager> extends Editor
     private final AWTEventListener onHoverListener;
 
     public VisualEditorSurface(@NotNull Project project, @NotNull Disposable parentDisposable,
+                               @NotNull Function<VisualEditorSurface<T>, SurfaceActionHandler> editorSurfaceActionHandlerProvider,
                                @NotNull ZoomControlsPolicy zoomControlsPolicy) {
-        this(project, parentDisposable, zoomControlsPolicy, Double.MAX_VALUE);
+        this(project, parentDisposable, editorSurfaceActionHandlerProvider, new DefaultSelectionModel(), zoomControlsPolicy, Double.MAX_VALUE);
     }
 
     public VisualEditorSurface(@NotNull Project project, @NotNull Disposable parentDisposable,
+                               @NotNull Function<VisualEditorSurface<T>, SurfaceActionHandler> actionHandlerProvider,
+                               @NotNull SelectionModel selectionModel,
                                @NotNull ZoomControlsPolicy zoomControlsPolicy,
                                double maxFitIntoZoomLevel) {
         super(new BorderLayout());
 
         Disposer.register(parentDisposable, this);
         this.project = project;
+        this.selectionModel = selectionModel;
         this.zoomControlsPolicy = zoomControlsPolicy;
 
         boolean hasZoomControls = this.zoomControlsPolicy != ZoomControlsPolicy.HIDDEN;
 
         setOpaque(true);
         setFocusable(false);
+
+        this.actionHandlerProvider = actionHandlerProvider;
 
         progressPanel = new MyProgressPanel();
         progressPanel.setName("Visual Editor Progress Panel");
@@ -193,6 +209,24 @@ public abstract class VisualEditorSurface<T extends SceneManager> extends Editor
     public Project getProject() {
         return project;
     }
+
+    @NotNull
+    public Function<VisualEditorSurface<T>, SurfaceActionHandler> getActionHandlerProvider() {
+        return actionHandlerProvider;
+    }
+
+    @NotNull
+    public SelectionModel getSelectionModel() {
+        return selectionModel;
+    }
+
+    @NotNull
+    public SecondarySelectionModel getSecondarySelectionModel() {
+        return selectionModel;
+    }
+
+    @NotNull
+    public abstract ItemTransferable getSelectionAsTransferable();
 
     /**
      * Gets a copy of {@code zoomListeners} under a lock. Use this method instead of accessing the listeners directly.
