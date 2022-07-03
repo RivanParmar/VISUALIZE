@@ -16,18 +16,17 @@ package com.rivan.android.studio.visual.scripting;
  *    limitations under the License.
  */
 
+import com.android.annotations.VisibleForTesting;
 import com.android.annotations.concurrency.GuardedBy;
 import com.android.annotations.concurrency.UiThread;
 import com.android.tools.adtui.Pannable;
 import com.android.tools.adtui.Zoomable;
+import com.android.tools.adtui.actions.ZoomType;
 import com.android.tools.adtui.common.SwingCoordinate;
 import com.android.tools.editor.PanZoomListener;
-import com.android.tools.idea.common.model.DefaultSelectionModel;
-import com.android.tools.idea.common.model.ItemTransferable;
-import com.android.tools.idea.common.model.SecondarySelectionModel;
-import com.android.tools.idea.common.model.SelectionModel;
+import com.android.tools.idea.common.model.*;
+import com.android.tools.idea.common.scene.SceneManager;
 import com.android.tools.idea.common.surface.MouseClickDisplayPanel;
-import com.android.tools.idea.common.surface.SurfaceScale;
 import com.android.tools.idea.common.surface.SurfaceScreenScalingFactor;
 import com.android.tools.idea.common.surface.layout.MatchParentLayoutManager;
 import com.android.tools.idea.ui.designer.EditorDesignSurface;
@@ -37,10 +36,12 @@ import com.intellij.openapi.actionSystem.DataProvider;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Disposer;
 import com.intellij.ui.JBColor;
+import com.intellij.ui.components.Magnificator;
 import com.intellij.ui.components.ZoomableViewport;
 import com.intellij.util.ui.AsyncProcessIcon;
 import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.UIUtil;
+import org.jetbrains.android.uipreview.AndroidEditorSettings;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -65,11 +66,33 @@ public abstract class VisualEditorSurface<T extends SceneManager> extends Editor
         AUTO_HIDE
     }
 
+    /**
+     * If the difference between old and new scaling values is less than threshold, the scaling will be ignored.
+     */
+    @SurfaceZoomLevel
+    protected static final double SCALING_THRESHOLD = 0.005;
+
     private static final Integer LAYER_PROGRESS = JLayeredPane.POPUP_LAYER + 10;
     private static final Integer LAYER_MOUSE_CLICK = LAYER_PROGRESS + 10;
 
     private final Project project;
 
+    @SurfaceScale private double scale = 1;
+    /**
+     * The scale level when magnification started. This is used as a standard when the new scale level is evaluated.
+     */
+    @SurfaceScale private double magnificationStartedScale;
+
+    /**
+     * {@link JScrollPane} contained in this surface when zooming is enabled.
+     */
+    @Nullable private final JScrollPane scrollPane;
+    /**
+     * Component that wraps the displayed content. If this is a scrollable surface, that will be the Scroll Pane.
+     * Otherwise, it will be the ScreenViewPanel container.
+     */
+    //@NotNull private final JComponent contentContainerPane;
+    @NotNull private final VisualEditorSurfaceViewport viewport;
     @NotNull private final JLayeredPane layeredPane;
     @NotNull private final MouseClickDisplayPanel mouseClickDisplayPanel;
 
@@ -80,11 +103,7 @@ public abstract class VisualEditorSurface<T extends SceneManager> extends Editor
 
     private final SelectionModel selectionModel;
 
-    /**
-     * {@link JScrollPane} contained in this surface when zooming is enabled.
-     */
-    @Nullable
-    private final JScrollPane scrollPane;
+    @SurfaceScale private final double maxFitIntoScale;
 
     @NotNull
     private final Function<VisualEditorSurface<T>, SurfaceActionHandler> actionHandlerProvider;
@@ -139,8 +158,11 @@ public abstract class VisualEditorSurface<T extends SceneManager> extends Editor
         if (scrollPane != null) {
             layeredPane.setLayout(new MatchParentLayoutManager());
             layeredPane.add(scrollPane, JLayeredPane.POPUP_LAYER);
+            //contentContainerPane = scrollPane;
+            viewport = new ScrollableEditorSurfaceViewport(scrollPane.getViewport());
         } else {
             layeredPane.setLayout(new OverlayLayout(layeredPane));
+            viewport = new NonScrollableDesignSurfaceViewport(this);
         }
         layeredPane.add(progressPanel, LAYER_PROGRESS);
         layeredPane.add(mouseClickDisplayPanel, LAYER_MOUSE_CLICK);
@@ -181,6 +203,14 @@ public abstract class VisualEditorSurface<T extends SceneManager> extends Editor
         } else {
             onHoverListener = event -> {};
         }
+
+        // Sets the maximum zoom level allowed for ZoomType#FIT.
+        maxFitIntoScale = maxFitIntoZoomLevel / getScreenScalingFactor();
+    }
+
+    @NotNull
+    protected VisualEditorSurfaceViewport getViewport() {
+        return viewport;
     }
 
     /**
@@ -257,6 +287,129 @@ public abstract class VisualEditorSurface<T extends SceneManager> extends Editor
 
     }
 
+    @Nullable
+    @Override
+    public Magnificator getMagnificator() {
+        if (!getSupportPinchAndZoom()) {
+            return null;
+        }
+
+        return (scale, at) -> null;
+    }
+
+    @Override
+    public void magnificationStarted(Point at) {
+        magnificationStartedScale = getScale();
+    }
+
+    @Override
+    public void magnify(double magnification) {
+        if (Double.compare(magnification, 0) == 0) {
+            return;
+        }
+
+        Point mouse;
+        if(!GraphicsEnvironment.isHeadless()) {
+            PointerInfo pointerInfo = MouseInfo.getPointerInfo();
+            if (pointerInfo == null) {
+                return;
+            }
+            mouse = pointerInfo.getLocation();
+            SwingUtilities.convertPointFromScreen(mouse, getViewport().getViewportComponent());
+        } else {
+            // In headless mode we assume the scale point is at the center.
+            mouse = new Point(getWidth() / 2, getHeight() / 2);
+        }
+        double sensitivity = 1d;
+        @SurfaceScale double newScale = magnificationStartedScale + magnification * sensitivity;
+        setScale(newScale, mouse.x, mouse.y);
+    }
+
+    /**
+     * Execute a zoom on the content. See {@link ZoomType} for the different type of zoom available.
+     *
+     * @see #zoom(ZoomType, int, int)
+     */
+    @UiThread
+    @Override
+    final public boolean zoom(@NotNull ZoomType type) {
+        return zoom(type, -1, -1);
+    }
+
+    @UiThread
+    public boolean zoom(@NotNull ZoomType type, @SwingCoordinate int x, @SwingCoordinate int y) {
+
+        if (type == ZoomType.IN && (x < 0 || y < 0)) {
+
+        }
+        boolean scaled;
+        switch (type) {
+            case IN: {
+                @SurfaceZoomLevel double currentScale = scale * getScreenScalingFactor();
+                int current = (int) (Math.round(currentScale * 100));
+                @SurfaceScale double scale = (ZoomType.zoomIn(current) / 100.0) / getScreenScalingFactor();
+                scaled = setScale(scale, x, y);
+                break;
+            }
+            case OUT: {
+                @SurfaceZoomLevel double currentScale = scale * getScreenScalingFactor();
+                int current = (int) (currentScale * 100);
+                @SurfaceScale double scale = (ZoomType.zoomOut(current) / 100.0) / getScreenScalingFactor();
+                scaled = setScale(scale, x, y);
+                break;
+            }
+            case ACTUAL:
+                scaled = setScale(1d / getScreenScalingFactor());
+                break;
+            case FIT:
+                scaled = setScale(getFitScale(false));
+                break;
+            default:
+                throw new UnsupportedOperationException("Not yet implemented: " + type);
+        }
+
+        return scaled;
+    }
+
+    /**
+     * @see #getFitScale(Dimension, boolean)
+     */
+    @SurfaceScale
+    public double getFitScale(boolean fitInto) {
+        int availableWidth = getExtentSize().width;
+        int availableHeight = getExtentSize().height;
+        return getFitScale(getPreferredContentSize(availableWidth, availableHeight), fitInto);
+    }
+
+    /**
+     * Measure the scale size which can fit the SceneViews into the scrollable area.
+     * This function doesn't consider the legal scale range, which can be get by {@link #getMaxScale()} and {@link #getMinScale()}.
+     *
+     * @param size    dimension to fit into the view
+     * @param fitInto If true, don't scale to more than 100%
+     * @return The scale to make the content fit the design surface
+     * @see #getScreenScalingFactor()
+     */
+    @SurfaceScale
+    protected double getFitScale(@AndroidCoordinate Dimension size, boolean fitInto) {
+        // Fit to zoom
+        int availableWidth = getExtentSize().width;
+        int availableHeight = getExtentSize().height;
+        Dimension padding = getDefaultOffset();
+        availableWidth -= padding.width;
+        availableHeight -= padding.height;
+
+        @SurfaceScale double scaleX = size.width == 0 ? 1 : (double) availableWidth / size.width;
+        @SurfaceScale double scaleY = size.height == 0 ? 1 : (double) availableHeight / size.height;
+        @SurfaceScale double scale = Math.min(scaleX, scaleY);
+        if (fitInto) {
+            @SurfaceScale double min = 1d / getScreenScalingFactor();
+            scale = Math.min(scale, min);
+        }
+        scale = Math.min(scale, maxFitIntoScale);
+        return scale;
+    }
+
     @SwingCoordinate
     protected abstract Dimension getDefaultOffset();
 
@@ -264,9 +417,30 @@ public abstract class VisualEditorSurface<T extends SceneManager> extends Editor
     @NotNull
     protected abstract Dimension getPreferredContentSize(int availableWidth, int availableHeight);
 
+    @UiThread
+    final public boolean zoomToFit() {
+        return zoom(ZoomType.FIT, -1, -1);
+    }
+
+    @Override
+    @SurfaceScale
+    public double getScale() {
+        return scale;
+    }
+
     @Override
     public boolean isPannable() {
         return true;
+    }
+
+    @Override
+    public boolean canZoomIn() {
+        return getScale() < getMaxScale();
+    }
+
+    @Override
+    public boolean canZoomOut() {
+        return getScale() > getMinScale();
     }
 
     @Override
@@ -274,7 +448,43 @@ public abstract class VisualEditorSurface<T extends SceneManager> extends Editor
 
     @Override
     public boolean canZoomToActual() {
-        return false;
+        double currentScale = getScale();
+        return (currentScale > 1 && canZoomOut()) || (currentScale < 1 && canZoomIn());
+    }
+
+    /**
+     * Returns the size of the surface scroll viewport.
+     */
+    @NotNull
+    @SwingCoordinate
+    public Dimension getExtentSize() {
+        return getViewport().getExtentSize();
+    }
+
+    /**
+     * Set the scale factor used to multiply the content size.
+     *
+     * @param scale The scale factor. Can be any value but it will be capped between -1 and 10
+     *              (value below 0 means zoom to fit)
+     * @return True if the scaling was changed, false if this was a noop.
+     */
+    public boolean setScale(double scale) {
+        return setScale(scale, -1, -1);
+    }
+
+    @VisibleForTesting(visibility = VisibleForTesting.Visibility.PROTECTED)
+    public boolean setScale(@SurfaceScale double scale, @SwingCoordinate int x, @SwingCoordinate int y) {
+        @SurfaceScale final double newScale = Math.min(Math.max(scale, getMinScale()), getMaxScale());
+        if (Math.abs(newScale - scale) < SCALING_THRESHOLD / getScreenScalingFactor()) {
+            return false;
+        }
+
+        double previousScale = scale;
+        scale = newScale;
+
+        revalidateScrollArea();
+        notifyScaleChanged(previousScale, scale);
+        return true;
     }
 
     /**
@@ -293,10 +503,20 @@ public abstract class VisualEditorSurface<T extends SceneManager> extends Editor
         return 1;
     }
 
+    private void notifyScaleChanged(double previousScale, double newScale) {
+        for (PanZoomListener myZoomListener : getZoomListeners()) {
+            myZoomListener.zoomChanged();
+        }
+    }
+
     private void notifyPanningChanged(AdjustmentEvent adjustmentEvent) {
         for (PanZoomListener myZoomListener : getZoomListeners()) {
             myZoomListener.panningChanged(adjustmentEvent);
         }
+    }
+
+    protected boolean getSupportPinchAndZoom() {
+        return true;
     }
 
     @NotNull
