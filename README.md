@@ -39,7 +39,7 @@ Currently, no specific designs have been made on how the Visual Editor and it's 
 # Issues and Feature-requests
 [![GitHub issues](https://img.shields.io/github/issues/RivanParmar/Android-Studio-Visual-Scripting-Plugin?style=for-the-badge)](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/issues) [![GitHub issues by-label](https://img.shields.io/github/issues/RivanParmar/Android-Studio-Visual-Scripting-Plugin/good%20first%20issue?color=blueviolet&label=good%20first%20issues&style=for-the-badge)](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/labels/good%20first%20issue)
 
-Two templates - **Bug report** and **Feature request** are provided under the issues tab for creating new issues and feature-requests respectively. You can also use the **No Template** or the **Blank Template** to report an issue if the templates don't meet your requirements or the issue isn't related to the templates.
+Two templates - **Bug report** and **Feature request** are provided under the issues tab for creating new issues and feature-requests respectively. You can also use the **No Template** or the **Blank Template** to report an issue if the templates don't meet your requirements.
 
 # Licence
 [![GitHub license](https://img.shields.io/github/license/RivanParmar/Android-Studio-Visual-Scripting-Plugin?style=for-the-badge)](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/blob/master/LICENSE)
