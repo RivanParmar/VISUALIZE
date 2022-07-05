@@ -1,5 +1,5 @@
 # Editor Files Documentation
-This document describes the purposes and usages of the files present in the [Java](../src/main/java/com/rivan/android/studio/visual/scripting/editor) and [Kotlin](../src/main/kotlin/com/rivan/android/studio/visual/scripting/editor) editor directories.
+This document describes the purposes and usages of the files present in the [Java](../src/main/java/com/rivan/android/studio/visualize/editor) and [Kotlin](../src/main/kotlin/com/rivan/android/studio/visualize/editor) editor directories.
 
 ## Descriptions
 Descriptions of terms used inside files are provided below.
@@ -35,6 +35,19 @@ Descriptions of terms used inside files are provided below.
             <li>The <strong>getPolicy()</strong> method is used to get the policy of the editor.</li>
             <li>The method is called by the IDE to get the policy of the editor.</li>
             <li>The method returns an instance of the policy to be used.</li>
+            <li>There are 4 policies available, they are:</li>
+            <details><summary>NONE</summary>
+              No policies are defined.
+            </details>
+            <details><summary>PLACE_BEFORE_DEFAULT_EDITOR</summary>
+              Place the provided editor before the default editor.
+            </details>
+            <details><summary>PLACE_AFTER_DEFAULT_EDITOR</summary>
+              Place the provided editor after the default editor.
+            </details>
+            <details><summary>HIDE_DEFAULT_EDITOR</summary>
+              Hide the default editor. <strong>The above policies do not hide the default editor.</strong>
+            </details>
           </ul>
         </details>
   </li>
