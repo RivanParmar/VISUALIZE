@@ -17,7 +17,7 @@ First of all, thanks for any contributions that you make to this project and the
 - Congratulations, you are now ready to start contributing!
 
 # Running and Debugging
-- First of all, set the `runIde.ideDir` to your own Android Studio installation path or leave it as it is if it's installed in the same directory as given. Or if you haven't installed Android Studio, comment out those lines including `runIde`.
+- First of all, set the `runIde.ideDir` to your own Android Studio installation path or leave it as it is if it's installed in the same directory as given.
 - Minimum Android Studio Arctic Fox Canary 1 is required for the plugin to work.
 - Click on Run (or Debug if you're debugging) from the Toolbar.
 - An Android Studio instance will open up and ask to install Android Studio.
@@ -44,6 +44,7 @@ Or interested in designing how the plugin and it's components will look? Check [
 # Resources
 - For getting started with Intellij IDEA or Android Studio plugins, checkout [Plugin Development Quick Start Guide](https://plugins.jetbrains.com/docs/intellij/basics.html).
 - For Android Studio specific plugin development setup, see [Android Studio Plugin Development](https://plugins.jetbrains.com/docs/intellij/android-studio.html).
+- For documentation related to this project, see the [docs](./docs).
 ### Sample Resources
 - [Gradle-Intellij-Plugin](https://github.com/JetBrains/gradle-intellij-plugin)
 - [Intellij IDEA plugins](https://github.com/JetBrains/intellij-community/tree/master/plugins)
