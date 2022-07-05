@@ -9,10 +9,10 @@
 https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white)-->
 </p>
 
-#  Android Studio Visual Scripting Plugin
+#  VISUALIZE
 [![GitHub stars](https://img.shields.io/github/stars/RivanParmar/Android-Studio-Visual-Scripting-Plugin?style=for-the-badge)](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/stargazers) [![GitHub forks](https://img.shields.io/github/forks/RivanParmar/Android-Studio-Visual-Scripting-Plugin?style=for-the-badge)](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/network)
 
-Plugin for adding Visual Scripting to Android Studio for Java and Kotlin. The plugin for Android Studio that will help you make your best app in Android Studio **without writing any Java or Kotlin code**!
+VISUALIZE is a plugin for adding Visual Scripting to Android Studio for Java and Kotlin. It will help you make your best app in Android Studio **without writing any Java or Kotlin code**!
 
 # ⚠️ Work-In-Progress
 ![Android Studio](https://user-images.githubusercontent.com/77159650/165101089-9df4809f-66a0-45b2-934b-0ed00f39577a.png)
