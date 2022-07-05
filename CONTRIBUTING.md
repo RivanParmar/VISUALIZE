@@ -1,5 +1,5 @@
 # Contributing to the Plugin
-First of all, thanks for any contributions that you make to this project and they are really appreciated! Below given are the prerequisites and setup instructions to help you get started for contributing.
+First of all, thanks for any contributions that you make to this project and they are really appreciated! Below given are the prerequisites and setup instructions to help you get started for contributing. If you are new to Intellij Plugin development, be sure to check out the [resources](CONTRIBUTING.md/#Resources) first to help you get started.
 
 # Prerequisites
 ![Android Studio](https://img.shields.io/badge/Android_Studio-Chipmunk-3DDC84?style=for-the-badge&logo=android-studio&logoColor=white)
@@ -12,8 +12,8 @@ First of all, thanks for any contributions that you make to this project and the
 - First, fork this repository to your account.
 - Clone the forked repository to your machine.
 - Open the cloned project in Intellij IDEA.
-- Match the `intellij.version` in **build.gradle** file with the Android Studio's platform version installed on your machine. For more information, please visit [Android Studio Plugin Development](https://plugins.jetbrains.com/docs/intellij/android-studio.html). For a list of all Android Studio releases along with the platform Intellij IDEA version, go [here](https://plugins.jetbrains.com/docs/intellij/android-studio-releases-list.html).
-- If you have Android Studio installed in some other directory than given in `runIde.ideDir`, change the variable's value accordingly.
+- Match the `intellij.localPath` in **build.gradle** file with the directory in which Android Studio is installed. This will be the same as the `runIde.dir` path.
+- Match `runIde.ideDir` with `intellij.localPath` by adding the path inside `file()`'s parenthesis.
 - Congratulations, you are now ready to start contributing!
 
 # Running and Debugging
@@ -32,14 +32,6 @@ Or interested in designing how the plugin and it's components will look? Check [
 
 # Making a Pull Request
 **Note**: Please check the **Issues** tab to see whether the issue you are trying to solve has been reported or not. If it isn't reported, then first please create a new issue and discuss what you are trying to do and then create a pull request.
-- Please make sure to read the [notes](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/edit/master/CONTRIBUTING.md#notes) before making a pull request.
-- After making necessary changes to the project, create a pull request just as you would normally do.
-- Congratulations! You have made your first pull request to the project!
-
-# Notes
-- Please do not change `intellij.version` while making a pull request, until a major stable version of Android Studio is released.
-- Instead of `version` you can also set `localPath` to the installation directory of Android Studio which would be same as `runIde.ideDir`. (But you must remove it before making a pull request)
-- The `runIde.ideDir` is the Android Studio installation directory.
 
 # Resources
 - For getting started with Intellij IDEA or Android Studio plugins, checkout [Plugin Development Quick Start Guide](https://plugins.jetbrains.com/docs/intellij/basics.html).

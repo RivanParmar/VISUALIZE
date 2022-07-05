@@ -24,14 +24,14 @@ public class SurfaceActionHandler implements DeleteProvider, CutProvider, CopyPr
 
     @Override
     public void performCopy(@NotNull DataContext dataContext) {
-        if (!surface.getSelectionModel().isEmpty()) {
-            copyPasteManager.setContents(surface.getSelectionAsTransferable());
-        }
+        //if (!surface.getSelectionModel().isEmpty()) {
+            //copyPasteManager.setContents(surface.getSelectionAsTransferable());
+        //}
     }
 
     @Override
     public boolean isCopyEnabled(@NotNull DataContext dataContext) {
-        return hasNonEmptySelection();
+        return false;
     }
 
     @Override
@@ -41,14 +41,12 @@ public class SurfaceActionHandler implements DeleteProvider, CutProvider, CopyPr
 
     @Override
     public void performCut(@NotNull DataContext dataContext) {
-        if (!surface.getSelectionModel().isEmpty()) {
 
-        }
     }
 
     @Override
     public boolean isCutEnabled(@NotNull DataContext dataContext) {
-        return hasNonEmptySelection();
+        return false;
     }
 
     @Override
@@ -63,7 +61,7 @@ public class SurfaceActionHandler implements DeleteProvider, CutProvider, CopyPr
 
     @Override
     public boolean canDeleteElement(@NotNull DataContext dataContext) {
-        return hasNonEmptySelection();
+        return false;
     }
 
     @Override
@@ -81,7 +79,7 @@ public class SurfaceActionHandler implements DeleteProvider, CutProvider, CopyPr
         return false;
     }
 
-    private boolean hasNonEmptySelection() {
+    /*private boolean hasNonEmptySelection() {
         return !surface.getSelectionModel().isEmpty();
-    }
+    }*/
 }

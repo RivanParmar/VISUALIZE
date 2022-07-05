@@ -24,8 +24,8 @@ import com.android.tools.adtui.Zoomable;
 import com.android.tools.adtui.actions.ZoomType;
 import com.android.tools.adtui.common.SwingCoordinate;
 import com.android.tools.editor.PanZoomListener;
-import com.android.tools.idea.common.model.*;
-import com.android.tools.idea.common.scene.SceneManager;
+import com.android.tools.idea.common.model.AndroidCoordinate;
+import com.android.tools.idea.common.model.ItemTransferable;
 import com.android.tools.idea.common.surface.MouseClickDisplayPanel;
 import com.android.tools.idea.common.surface.SurfaceScreenScalingFactor;
 import com.android.tools.idea.common.surface.layout.MatchParentLayoutManager;
@@ -41,7 +41,6 @@ import com.intellij.ui.components.ZoomableViewport;
 import com.intellij.util.ui.AsyncProcessIcon;
 import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.UIUtil;
-import org.jetbrains.android.uipreview.AndroidEditorSettings;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -101,7 +100,7 @@ public abstract class VisualEditorSurface<T extends SceneManager> extends Editor
     @GuardedBy("listenersLock")
     @NotNull private ArrayList<PanZoomListener> zoomListeners = new ArrayList<>();
 
-    private final SelectionModel selectionModel;
+    //private final SelectionModel selectionModel;
 
     @SurfaceScale private final double maxFitIntoScale;
 
@@ -120,19 +119,20 @@ public abstract class VisualEditorSurface<T extends SceneManager> extends Editor
     public VisualEditorSurface(@NotNull Project project, @NotNull Disposable parentDisposable,
                                @NotNull Function<VisualEditorSurface<T>, SurfaceActionHandler> editorSurfaceActionHandlerProvider,
                                @NotNull ZoomControlsPolicy zoomControlsPolicy) {
-        this(project, parentDisposable, editorSurfaceActionHandlerProvider, new DefaultSelectionModel(), zoomControlsPolicy, Double.MAX_VALUE);
+        this(project, parentDisposable, editorSurfaceActionHandlerProvider, //new DefaultSelectionModel(),
+                zoomControlsPolicy, Double.MAX_VALUE);
     }
 
     public VisualEditorSurface(@NotNull Project project, @NotNull Disposable parentDisposable,
                                @NotNull Function<VisualEditorSurface<T>, SurfaceActionHandler> actionHandlerProvider,
-                               @NotNull SelectionModel selectionModel,
+                               //@NotNull SelectionModel selectionModel,
                                @NotNull ZoomControlsPolicy zoomControlsPolicy,
                                double maxFitIntoZoomLevel) {
         super(new BorderLayout());
 
         Disposer.register(parentDisposable, this);
         this.project = project;
-        this.selectionModel = selectionModel;
+        //this.selectionModel = selectionModel;
         this.zoomControlsPolicy = zoomControlsPolicy;
 
         boolean hasZoomControls = this.zoomControlsPolicy != ZoomControlsPolicy.HIDDEN;
@@ -245,15 +245,15 @@ public abstract class VisualEditorSurface<T extends SceneManager> extends Editor
         return actionHandlerProvider;
     }
 
-    @NotNull
+    /*@NotNull
     public SelectionModel getSelectionModel() {
         return selectionModel;
     }
 
     @NotNull
     public SecondarySelectionModel getSecondarySelectionModel() {
-        return selectionModel;
-    }
+        return (SecondarySelectionModel) selectionModel;
+    }*/
 
     @NotNull
     public abstract ItemTransferable getSelectionAsTransferable();
@@ -505,7 +505,7 @@ public abstract class VisualEditorSurface<T extends SceneManager> extends Editor
 
     private void notifyScaleChanged(double previousScale, double newScale) {
         for (PanZoomListener myZoomListener : getZoomListeners()) {
-            myZoomListener.zoomChanged();
+            myZoomListener.zoomChanged(previousScale, newScale);
         }
     }
 
