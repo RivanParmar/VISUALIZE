@@ -1,4 +1,4 @@
-package com.rivan.android.studio.visual.scripting;
+package com.rivan.android.studio.visualize;
 
 import com.android.annotations.concurrency.Slow;
 import com.android.ide.common.resources.ResourceResolver;

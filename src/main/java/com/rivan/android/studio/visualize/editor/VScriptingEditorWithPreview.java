@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.rivan.android.studio.visual.scripting.editor;
+package com.rivan.android.studio.visualize.editor;
 
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.ToggleAction;

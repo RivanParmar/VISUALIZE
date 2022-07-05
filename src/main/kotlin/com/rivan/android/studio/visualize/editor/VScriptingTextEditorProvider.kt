@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.rivan.android.studio.visual.scripting.editor
+package com.rivan.android.studio.visualize.editor
 
 import com.intellij.facet.ProjectFacetManager
 import com.intellij.lang.java.JavaLanguage

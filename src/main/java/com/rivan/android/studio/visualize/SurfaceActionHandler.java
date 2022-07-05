@@ -1,4 +1,4 @@
-package com.rivan.android.studio.visual.scripting;
+package com.rivan.android.studio.visualize;
 
 import com.intellij.ide.CopyProvider;
 import com.intellij.ide.CutProvider;

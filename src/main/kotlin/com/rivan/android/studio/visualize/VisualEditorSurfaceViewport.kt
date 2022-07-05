@@ -1,4 +1,4 @@
-package com.rivan.android.studio.visual.scripting
+package com.rivan.android.studio.visualize
 
 import java.awt.Component
 import java.awt.Dimension

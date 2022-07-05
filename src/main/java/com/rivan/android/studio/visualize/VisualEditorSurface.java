@@ -1,4 +1,4 @@
-package com.rivan.android.studio.visual.scripting;
+package com.rivan.android.studio.visualize;
 
 /*
  * Copyright 2022 Rivan Parmar

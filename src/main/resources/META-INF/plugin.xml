@@ -15,9 +15,9 @@
   -->
 
 <idea-plugin>
-    <id>com.rivan.android.studio.visual.scripting</id>
-    <name>Android Studio Visual Scripting</name>
-    <vendor email="support@yourcompany.com" url="https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin">YourCompany</vendor>
+    <id>com.rivan.android.studio.visualize</id>
+    <name>VISUALIZE</name>
+    <vendor email="support@yourcompany.com" url="https://github.com/RivanParmar/VISUALIZE">YourCompany</vendor>
 
     <description><![CDATA[
     Enter short description for your plugin here.<br>
@@ -34,7 +34,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
         <!-- Order the editor as the first one if default editor cannot be hidden -->
-        <fileEditorProvider implementation="com.rivan.android.studio.visual.scripting.editor.VScriptingSplitEditorProvider"
+        <fileEditorProvider implementation="com.rivan.android.studio.visualize.editor.VScriptingSplitEditorProvider"
                             order="first"/>
     </extensions>
 
