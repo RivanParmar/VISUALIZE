@@ -10,7 +10,7 @@ Descriptions of terms used inside files are provided below.
 </summary>
 <ul>
   <li>A FileEditorProvider is a class that provides an editor for all types of files.</li>
-  <li>The editor to be created is another class that extends the <strong><a href="">FileEditor</a></strong>.</li>
+  <li>The editor to be created is another class that extends the <strong><a href="../docs/EditorFilesDoc.md#fileeditor">FileEditor</a></strong>.</li>
   <li>A FileEditorProvider overrides atleast 4 methods, i.e.,
         <details id><summary>accept()</summary>
           <ul>
