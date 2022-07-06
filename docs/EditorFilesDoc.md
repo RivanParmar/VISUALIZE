@@ -6,7 +6,8 @@ Descriptions of terms used inside files are provided below.
 
 <details><summary>
 
-### FileEditorProvider</summary>
+### FileEditorProvider
+</summary>
 <ul>
   <li>A FileEditorProvider is a class that provides an editor for all types of files.</li>
   <li>The editor to be created is another class that extends the <strong>FileEditor</strong>.</li>
