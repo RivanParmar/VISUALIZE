@@ -44,4 +44,4 @@ Two templates - **Bug report** and **Feature request** are provided under the is
 
 This project is available to all under the [Apache-2.0](https://github.com/RivanParmar/Android-Studio-Visual-Scripting-Plugin/blob/master/LICENSE) license.
 
-[^1]:Please refer [here]() for more information.
+[^1]:Android Studio already comes with a custom editor that hides the default Intellij IDEA editor. So we can only hide the default editor and not Android Studio editor.
