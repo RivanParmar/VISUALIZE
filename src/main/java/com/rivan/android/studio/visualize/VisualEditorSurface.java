@@ -117,13 +117,15 @@ public abstract class VisualEditorSurface<T extends SceneManager> extends Editor
     private final AWTEventListener onHoverListener;
 
     public VisualEditorSurface(@NotNull Project project, @NotNull Disposable parentDisposable,
+                               @NotNull Function<VisualEditorSurface<T>, EditorActionManager<? extends VisualEditorSurface<T>>> actionManagerProvider,
                                @NotNull Function<VisualEditorSurface<T>, SurfaceActionHandler> editorSurfaceActionHandlerProvider,
                                @NotNull ZoomControlsPolicy zoomControlsPolicy) {
-        this(project, parentDisposable, editorSurfaceActionHandlerProvider, //new DefaultSelectionModel(),
+        this(project, parentDisposable, actionManagerProvider, editorSurfaceActionHandlerProvider, //new DefaultSelectionModel(),
                 zoomControlsPolicy, Double.MAX_VALUE);
     }
 
     public VisualEditorSurface(@NotNull Project project, @NotNull Disposable parentDisposable,
+                               @NotNull Function<VisualEditorSurface<T>, EditorActionManager<? extends VisualEditorSurface<T>>> actionManagerProvider,
                                @NotNull Function<VisualEditorSurface<T>, SurfaceActionHandler> actionHandlerProvider,
                                //@NotNull SelectionModel selectionModel,
                                @NotNull ZoomControlsPolicy zoomControlsPolicy,
@@ -303,6 +305,11 @@ public abstract class VisualEditorSurface<T extends SceneManager> extends Editor
     }
 
     @Override
+    public void magnificationFinished(double magnification) {
+
+    }
+
+    @Override
     public void magnify(double magnification) {
         if (Double.compare(magnification, 0) == 0) {
             return;
@@ -336,6 +343,21 @@ public abstract class VisualEditorSurface<T extends SceneManager> extends Editor
         return zoom(type, -1, -1);
     }
 
+    /**
+     * <p>
+     * Execute a zoom on the content. See {@link ZoomType} for the different types of zoom available.
+     * </p><p>
+     * If type is {@link ZoomType#IN}, zoom toward the given
+     * coordinates (relative to {@link #getLayeredPane()})
+     * <p>
+     * If x or y are negative, zoom toward the center of the viewport.
+     * </p>
+     *
+     * @param type Type of zoom to be executed
+     * @param x    Coordinate where the zoom will be centered
+     * @param y    Coordinate where the zoom will be centered
+     * @return True if the scaling was changed, false if this was a noop.
+     */
     @UiThread
     public boolean zoom(@NotNull ZoomType type, @SwingCoordinate int x, @SwingCoordinate int y) {
 
@@ -485,6 +507,67 @@ public abstract class VisualEditorSurface<T extends SceneManager> extends Editor
         revalidateScrollArea();
         notifyScaleChanged(previousScale, scale);
         return true;
+    }
+
+    protected boolean isKeepingScaleWhenReopen() {
+        return true;
+    }
+
+    /**
+     * Save the current zoom level from the file of the given {@link VisualEditorModel}.
+     */
+    private void storeCurrentScale(@NotNull VisualEditorModel model) {
+        if (!isKeepingScaleWhenReopen()) {
+            return;
+        }
+        // TODO: Create a custom class for saving the zoom level
+    }
+
+    /**
+     * Load the saved zoom level from the file of the given {@link VisualEditorModel}.
+     * Return true if the previous zoom level is restored, false otherwise.
+     */
+    private boolean restoreScale(@NotNull VisualEditorModel model) {
+        if (!isKeepingScaleWhenReopen()) {
+            return false;
+        }
+        // TODO: Restore saved zoom level with the help of custom class
+        return false;
+    }
+
+    public void setScrollPosition(@SwingCoordinate int x, @SwingCoordinate int y) {
+        setScrollPosition(new Point(x, y));
+    }
+
+    /**
+     * Sets the offset for the scroll viewer to the specified x and y values
+     * The offset will never be less than zero, and never greater than the
+     * maximum value allowed by the sizes of the underlying view and the extent.
+     * If the zoom factor is large enough that the scroll bars aren't visible,
+     * the position will be set to zero.
+     */
+    @Override
+    public void setScrollPosition(@SwingCoordinate Point p) {
+        p.setLocation(Math.max(0, p.x), Math.max(0, p.y));
+
+        Dimension extent = getExtentSize();
+        Dimension view = getViewSize();
+
+        int minX = Math.min(p.x, view.width - extent.width);
+        int minY = Math.min(p.y, view.height - extent.height);
+
+        p.setLocation(minX, minY);
+
+        getViewport().setViewPosition(p);
+    }
+
+    /**
+     * Returns the size of the surface containing the ScreenViews.
+     */
+    @NotNull
+    @SwingCoordinate
+    public Dimension getViewSize() {
+        return getViewport().getViewSize();
     }
 
     /**

@@ -25,6 +25,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.VisibleForTesting;
 
+import java.util.Collections;
+import java.util.Set;
+import java.util.WeakHashMap;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
 
 import static com.google.common.base.Verify.verifyNotNull;
@@ -44,12 +48,23 @@ public class VisualEditorModel implements Disposable, ModificationTracker {
     @Nullable private String modelTooltip;
 
     private final long id;
+    private final Set<Object> activations = Collections.newSetFromMap(new WeakHashMap<>());
 
     private final MergingUpdateQueue updateQueue;
 
+    private final @NotNull AtomicReference<Disposable> themeUpdateComputation = new AtomicReference<>();
     private boolean disposed;
 
     private final BiFunction<Project, VirtualFile, PsiJavaFile> javaFileProvider;
+
+    protected VisualEditorModel(@Nullable Disposable parent,
+                                @Nullable String modelDisplayName,
+                                @Nullable String modelTooltip,
+                                @NotNull AndroidFacet facet,
+                                @NotNull VirtualFile file,
+                                @NotNull Configuration configuration) {
+        this(parent, modelDisplayName, modelTooltip, facet, file, configuration, VisualEditorModel::getDefaultJavaFile);
+    }
 
     @VisibleForTesting
     protected VisualEditorModel(@Nullable Disposable parent,
@@ -88,8 +103,18 @@ public class VisualEditorModel implements Disposable, ModificationTracker {
         }
 
         boolean wasActive;
+        synchronized (activations) {
+            wasActive = !activations.isEmpty();
+            activations.add(source);
+        }
 
-        return false;
+        if (!wasActive) {
+            // This was the first activation so enable listeners
+
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void updateTheme() {
@@ -97,21 +122,32 @@ public class VisualEditorModel implements Disposable, ModificationTracker {
         if (themeUrl != null && themeUrl.type == ResourceType.STYLE) {
             Disposable computationToken = Disposer.newDisposable();
             Disposer.register(this, computationToken);
+            Disposable oldComputation = themeUpdateComputation.getAndSet(computationToken);
+            if (oldComputation != null) {
+                Disposer.dispose(oldComputation);
+            }
         }
     }
 
     @Slow
     private void updateTheme(@NotNull ResourceUrl themeUrl, @NotNull Disposable computationToken) {
+        if (themeUpdateComputation.get() != computationToken) {
+            return; // A new update has already been scheduled
+        }
 
         try {
             ResourceResolver resolver = getResourceResolver();
             if (resolver.getTheme(themeUrl.name, themeUrl.isFramework()) == null) {
                 String theme = configuration.getConfigurationManager().computePreferredTheme(configuration);
-
+                if (themeUpdateComputation.get() != computationToken) {
+                    return; // A new update has already been scheduled
+                }
                 ApplicationManager.getApplication().invokeLater(() -> configuration.setTheme(theme), a -> disposed);
             }
         } finally {
-
+            if (themeUpdateComputation.compareAndSet(computationToken, null)) {
+                Disposer.dispose(computationToken);
+            }
         }
     }
 
@@ -134,12 +170,31 @@ public class VisualEditorModel implements Disposable, ModificationTracker {
 
     }
 
+    /**
+     * Notify model that it's not active. This means it can stop watching for events etc. It may be activated again in the future.
+     *
+     * @param source the source is used to keep track of the references that are using this model. Only when all the sources have called
+     *               deactivate(Object), the model will be really deactivated.
+     * @return true if the model was active before and was deactivated.
+     */
     public boolean deactivate(@NotNull Object source) {
-        return false;
+        boolean shouldDeactivate;
+        synchronized (activations) {
+            boolean removed = activations.remove(source);
+            // If there are no more deactivations, call the private #deactivate()
+            shouldDeactivate = removed && activations.isEmpty();
+        }
+
+        if (shouldDeactivate) {
+            deactivate();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @NotNull
-    public VirtualFile getFile() {
+    public VirtualFile getVirtualFile() {
         return file;
     }
 
@@ -147,6 +202,15 @@ public class VisualEditorModel implements Disposable, ModificationTracker {
     private static PsiJavaFile getDefaultJavaFile(Project project, VirtualFile virtualFile) {
         PsiJavaFile file = (PsiJavaFile) AndroidPsiUtils.getPsiFileSafely(project, virtualFile);
         return verifyNotNull(file);
+    }
+
+    @NotNull
+    public PsiJavaFile getFile() {
+        return javaFileProvider.apply(getProject(), file);
+    }
+
+    public long getId() {
+        return id;
     }
 
     @NotNull
@@ -171,7 +235,18 @@ public class VisualEditorModel implements Disposable, ModificationTracker {
 
     @Override
     public void dispose() {
+        disposed = true;
+        boolean shouldDeactivate;
 
+        synchronized (activations) {
+            // If there are no activations left, make sure we deactivate the model correctly
+            shouldDeactivate = !activations.isEmpty();
+            activations.clear();
+        }
+
+        if (shouldDeactivate) {
+            deactivate(); // ensure listeners are unregistered if necessary
+        }
     }
 
     @Override
