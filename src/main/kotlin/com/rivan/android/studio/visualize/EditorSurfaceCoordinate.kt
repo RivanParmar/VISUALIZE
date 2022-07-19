@@ -1,7 +1,7 @@
 package com.rivan.android.studio.visualize
 
 /**
- * The independent scaling system in DesignSurface regardless DPI of display.
+ * The independent scaling system in VisualEditorSurface regardless DPI of display.
  * For example, when zoom level is 50% and ScreenScalingFactor is 2, this value is 50% / 2 = 25%
  */
 @Retention(AnnotationRetention.SOURCE)
