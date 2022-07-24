@@ -96,11 +96,15 @@ public abstract class VisualEditorSurface<T extends SceneManager> extends Editor
     @NotNull private final MouseClickDisplayPanel mouseClickDisplayPanel;
 
     private final Object listenersLock = new Object();
-
+    @GuardedBy("listenersLock")
+    protected final ArrayList<EditorSurfaceListener> listeners = new ArrayList<>();
     @GuardedBy("listenersLock")
     @NotNull private ArrayList<PanZoomListener> zoomListeners = new ArrayList<>();
+    private final EditorActionManager<? extends VisualEditorSurface<T>> actionManager;
 
     //private final SelectionModel selectionModel;
+
+    private boolean isActive = false;
 
     @SurfaceScale private final double maxFitIntoScale;
 
@@ -180,6 +184,9 @@ public abstract class VisualEditorSurface<T extends SceneManager> extends Editor
                 }
             }
         });
+
+        actionManager = actionManagerProvider.apply(this);
+        actionManager.registerActionsShortcuts(layeredPane);
 
         if (hasZoomControls) {
             JPanel zoomControlsLayerPane = new JPanel();
@@ -610,6 +617,19 @@ public abstract class VisualEditorSurface<T extends SceneManager> extends Editor
     @SuppressWarnings("FieldAccessedSynchronizedAndUnsynchronized")
     private final MyProgressPanel progressPanel;
 
+    public void addListener(@NotNull EditorSurfaceListener listener) {
+        synchronized (listenersLock) {
+            listeners.remove(listener); // ensure single registration
+            listeners.add(listener);
+        }
+    }
+
+    public void removeListener(@NotNull EditorSurfaceListener listener) {
+        synchronized (listenersLock) {
+            listeners.remove(listener);
+        }
+    }
+
     public void addPanZoomListener(@NotNull PanZoomListener listener) {
         synchronized (listenersLock) {
             zoomListeners.remove(listener);
@@ -627,10 +647,21 @@ public abstract class VisualEditorSurface<T extends SceneManager> extends Editor
         if (Disposer.isDisposed(this)) {
             return;
         }
+
+        if (!isActive) {
+
+            if (zoomControlsPolicy == ZoomControlsPolicy.AUTO_HIDE) {
+                Toolkit.getDefaultToolkit().addAWTEventListener(onHoverListener, AWTEvent.MOUSE_EVENT_MASK);
+            }
+        }
+        isActive = true;
     }
 
     public void deactivate() {
-
+        if (isActive) {
+            Toolkit.getDefaultToolkit().removeAWTEventListener(onHoverListener);
+        }
+        isActive = false;
     }
 
     protected boolean useSmallProgressIcon() {

@@ -105,3 +105,10 @@ Descriptions of terms used inside files are provided below.
   </li>
 </ul>
 </details>
+
+## Diagram
+Diagrammatic representation of how the editor files work is provided below.
+```mermaid
+graph TD;
+n1([IDE])
+```
