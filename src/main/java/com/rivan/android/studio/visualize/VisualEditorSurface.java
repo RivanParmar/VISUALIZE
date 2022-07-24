@@ -1,5 +1,3 @@
-package com.rivan.android.studio.visualize;
-
 /*
  * Copyright 2022 Rivan Parmar
  *
@@ -15,6 +13,8 @@ package com.rivan.android.studio.visualize;
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
+
+package com.rivan.android.studio.visualize;
 
 import com.android.annotations.VisibleForTesting;
 import com.android.annotations.concurrency.GuardedBy;
